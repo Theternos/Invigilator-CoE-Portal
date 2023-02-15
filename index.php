@@ -136,12 +136,12 @@ include 'calender.php';
                         </div>
                         <div class="event_details">
                             <div class="event_time">
+                                <img src="./assets/time.png" alt="time  icon" height="10%">
                                 <?php
                                 $sql = "SELECT * FROM staff WHERE email = '$username' and `status` = 'ONGOING' LIMIT 1";
                                 $result = mysqli_query($link, $sql);
                                 if ($result->num_rows > 0) {
                                     while ($row = mysqli_fetch_assoc($result)) { ?>
-                                        <img src="./assets/time.png" alt="time  icon" height="10%">
                                         <p class="date">
                                             <?php
                                             if ($row['date_time'] == null) {
@@ -165,7 +165,7 @@ include 'calender.php';
                         <p class='date'>No Ongoing Events</p>
                         </div>
                         <P class="venue">Venue: &nbsp;<span>No Ongoing Events</span></P>
-                        <p class="event_status">Status: &nbsp;<i style="color: #fdc60f;" class="fa fa-circle" aria-hidden="true"></i>&nbsp;<span>No Ongoing Events</span></p>
+                        <p class="event_status">Status: &nbsp;<i style="color: #00ff00;" class="fa fa-circle" aria-hidden="true"></i>&nbsp;<span>No Ongoing Events</span></p>
                     <?php
                                 } ?>
                     </div>
@@ -238,7 +238,7 @@ include 'calender.php';
                 <p class='date'>No Ended Events</p>
                 </div>
                 <P class="venue">Venue: &nbsp;<span>No Ended Events</span></P>
-                <p class="event_status">Status: &nbsp;<i style="color: #fdc60f;" class="fa fa-circle" aria-hidden="true"></i>&nbsp;<span>No Ended Events</span></p>
+                <p class="event_status">Status: &nbsp;<i style="color: red;" class="fa fa-circle" aria-hidden="true"></i>&nbsp;<span>No Ended Events</span></p>
             <?php
                         }
             ?>
@@ -297,17 +297,17 @@ include 'calender.php';
             $result3 = mysqli_query($link, $sql3);
             $row3 = mysqli_fetch_assoc($result3);
             if ($row2['alt_mail'] == $username) { ?>
-                <p>Hey! ✨ You have a substitution on <?php echo $row2['date_time'] ?></p>
+                <p style="margin-top: 3px;">Hey! ✨ You have a substitution on <?php echo $row2['date_time'] ?></p>
                 <div class="leave_accept_reject">
                     <form action="leave_cancel.php" method="POST">
                         <input type="hidden" name='alt_mail' value='<?php echo $row['alt_mail'] ?>'>
                         <input type="hidden" name='date_time' value='<?php echo $row['date_time'] ?>'>
-                        <button class="leave_cancel" name="leave_accept" onclick="return confirm('Are you sure you want to Accept?')">Accept</button>
+                        <button class="leave_cancel" name="leave_accept" onclick="return confirm('Are you sure you want to Accept?')">ACCEPT</button>
                     </form>
                     <form action="leave_cancel.php" method="POST">
                         <input type="hidden" name='alt_mail' value='<?php echo $row['alt_mail'] ?>'>
                         <input type="hidden" name='date_time' value='<?php echo $row['date_time'] ?>'>
-                        <button class="leave_cancel" name="leave_reject" onclick="return confirm('Are you sure you want to Reject?')">Reject</button>
+                        <button class="leave_cancel red" name="leave_reject" onclick="return confirm('Are you sure you want to Reject?')">REJECT</button>
                     </form>
                 </div>
             <?php
@@ -320,7 +320,15 @@ include 'calender.php';
         <div class="initia">
             <h5>LATEST ANNOUNCEMENTS & NEWS</h5>
             <?php
-            if ($row2['alt_mail'] == $username) {
+            $sql = "SELECT * from `invigilation`.`latest_announcements` ORDER BY id DESC LIMIT 1";
+            $result = mysqli_query($link, $sql);
+            if ($result->num_rows > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    if ($row['announcements'] != null) { ?>
+                        <p style="margin-top: 10px;"><?php echo $row['announcements'] ?></p>
+            <?php
+                    }
+                }
             } else {
                 echo "<h3>Hola! No New Updates 💫</h3>";
             }

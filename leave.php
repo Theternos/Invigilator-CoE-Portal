@@ -99,7 +99,7 @@ error_reporting(0);
                             </select>
                         </div><br><br>
                         <div class="flex-row">
-                            <label style="margin-top: 18px;">Leave / Mutual Interchange Reason: </label>
+                            <label style="margin-top: 26px;">Leave / Mutual Interchange Reason: </label>
                             <textarea name="leave_reason" id="leave_reason" required></textarea>
                         </div><br>
                         <div class="flex-row">
@@ -115,15 +115,52 @@ error_reporting(0);
                 </div>
             </section>
             <section class="leave_graph">
-                <h3>Track your activity</h3>
+                <h3>Visualize your activity</h3>
+                <?php
+                $sql = "SELECT COUNT(id) as COUNT FROM `leave` WHERE mail = '$username' and `status` = 'ACCEPTED' and `leave_type` = 'Leave'";
+                $result = mysqli_query($link, $sql);
+                if ($result->num_rows > 0) {
+                    $leave_accepted_leave_row = mysqli_fetch_assoc($result);
+                } else {
+                    $leave_accepted_leave_row['COUNT'] = 0;
+                }
+                $sql = "SELECT COUNT(id) as COUNT FROM `leave` WHERE mail = '$username' and `status` = 'ACCEPTED' and `leave_type` = 'Mutual Interchange'";
+                $result = mysqli_query($link, $sql);
+                if ($result->num_rows > 0) {
+                    $leave_accepted_mutual_row = mysqli_fetch_assoc($result);
+                } else {
+                    $leave_accepted_mutual_row['COUNT'] = 0;
+                }
+                $sql = "SELECT COUNT(id) as COUNT FROM `leave` WHERE mail = '$username' and `status` = 'REJECTED' and `leave_type` = 'Leave'";
+                $result = mysqli_query($link, $sql);
+                if ($result->num_rows > 0) {
+                    $leave_rejected_leave_row = mysqli_fetch_assoc($result);
+                } else {
+                    $leave_rejected_leave_row['COUNT'] = 0;
+                }
+                $sql = "SELECT COUNT(id) as COUNT FROM `leave` WHERE mail = '$username' and `status` = 'REJECTED' and `leave_type` = 'Mutual Interchange'";
+                $result = mysqli_query($link, $sql);
+                if ($result->num_rows > 0) {
+                    $leave_rejected_mutual_row = mysqli_fetch_assoc($result);
+                } else {
+                    $leave_rejected_mutual_row['COUNT'] = 0;
+                }
+                $dataPoints = array(
+                    array("y" => $leave_rejected_leave_row['COUNT'], "label" => "Leave (Rejected)"),
+                    array("y" => $leave_rejected_mutual_row['COUNT'], "label" => "Mutual Interchange (Rejected)"),
+                    array("y" => $leave_accepted_leave_row['COUNT'], "label" => "Leave (Accepted)"),
+                    array("y" => $leave_accepted_mutual_row['COUNT'], "label" => "Mutual Interchange (Accepted)"),
+                );
 
+                ?>
+                <div id="chartContainer" style="height: 90%; width: 100%;"></div>
             </section>
         </section>
         <section class="history_leave">
             <h2 class="leave_history_h2">Leave Summary</h2>
 
             <?php
-            $sql = "SELECT * FROM invigilation.leave where mail = '$username'";
+            $sql = "SELECT * FROM invigilation.`leave` where mail = '$username' ORDER BY id DESC";
             $result = mysqli_query($link, $sql);
             $temp = 1;
             if (mysqli_num_rows($result) > 0) { ?>
@@ -156,7 +193,7 @@ error_reporting(0);
                             $temp = $temp + 1;
                         }
                     } else { ?>
-                        <h4 style="text-align: center; padding-bottom:20px; padding-top:20px; letter-spacing:2px;">No Leave Record Found!</h4>
+                        <p style="text-align: center; letter-spacing:2px; margin-top:70%;">No Leave Record Found!</p>
                     <?php  }
                     ?>
                     </tbody>
@@ -186,5 +223,30 @@ error_reporting(0);
     }
 </script>
 
+<script>
+    window.onload = function() {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+
+            axisY: {
+                title: "Total number of Leave Count",
+                includeZero: true
+            },
+            data: [{
+                type: "bar",
+                yValueFormatString: "#",
+                indexLabel: "{y}",
+                indexLabelPlacement: "inside",
+                indexLabelFontWeight: "bolder",
+                indexLabelFontColor: "white",
+                dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+            }]
+        });
+        chart.render();
+
+    }
+</script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 </html>

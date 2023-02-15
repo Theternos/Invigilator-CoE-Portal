@@ -358,6 +358,28 @@
         flex-direction: row;
     }
     
+    .leave_accept_reject {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 15px;
+    }
+    
+    .leave_accept_reject button {
+        width: 65px;
+        height: 28px;
+        border: 0px;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #1f1e1e;
+        color: #f3f2f2;
+    }
+    
+    .red {
+        background-color: #b90000 !important;
+        color: #fff !important;
+    }
+    
     .initial_0 {
         display: flex;
         flex-direction: column;
@@ -373,7 +395,7 @@
     }
     
     .ini {
-        display: flex;
+        display: flex !important;
         flex-direction: row !important;
     }
     
@@ -443,7 +465,7 @@
     }
     
     .add-todo input {
-        height: 20px;
+        height: 25px;
         width: 77%;
         border-radius: 5px;
         border: 1px solid #ccc;
@@ -452,7 +474,7 @@
     }
     
     .add-todo p {
-        height: 20px;
+        height: 25px;
         width: 90%;
         border-radius: 5px;
         border: 1px solid;
@@ -489,7 +511,7 @@
     }
     
     .add-todo button {
-        height: 24px;
+        height: 28px;
         width: 17%;
         border-radius: 5px;
         border: 1px solid #ccc;
@@ -700,11 +722,13 @@
     
     .leave {
         background-color: #fff;
-        width: 56vw;
+        width: 45.7vw !important;
         height: 45vh;
         border-radius: 6px;
-        margin-left: 5vw;
+        margin-left: 6.5vw !important;
         padding: 20px;
+        padding-left: 10%;
+        padding-right: 10%;
     }
     
     .leave_graph {
@@ -712,7 +736,7 @@
         width: 56vw;
         height: 29.5vh;
         border-radius: 6px;
-        margin-left: 5vw;
+        margin-left: 6.5vw;
         padding: 20px;
         margin-top: 5vh;
     }
@@ -724,6 +748,7 @@
         font-weight: 300;
         text-align: center;
         text-transform: uppercase;
+        margin-bottom: 15px;
     }
     
     .leave_graph h3 {
@@ -750,7 +775,7 @@
         min-width: 28vw !important;
         height: 90vh;
         border-radius: 6px;
-        margin-left: 5vw;
+        margin-left: 4vw;
         overflow-y: scroll;
         position: relative;
         margin-right: 0;
@@ -764,13 +789,14 @@
     }
     
     .history_leave button {
-        min-width: 45px !important;
-        min-height: 25px !important;
+        min-width: 70px !important;
+        min-height: 30px !important;
         border: 1px #000;
         background-color: #000 !important;
         color: #ccc;
         border-radius: 5px;
         cursor: pointer;
+        letter-spacing: 1px;
     }
     
     .history_leave button:hover {
@@ -856,7 +882,7 @@
             margin-bottom: 12px;
         }
         table tbody tr td:last-child {
-            margin-bottom: 0;
+            margin-bottom: 10px;
         }
         table tbody tr td:before {
             position: absolute;
@@ -889,4 +915,126 @@
         min-width: fit-content;
         padding: 2px;
         min-height: 30px !important;
+    }
+    
+    .date_time,
+    .leave_type,
+    .alt_staff {
+        height: 30px;
+        width: fit-content;
+        padding: 5px;
+    }
+    
+    #leave_reason {
+        width: 50%;
+        height: 50px;
+        border-radius: 6px;
+        padding: 10px;
+    }
+    
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .leave label {
+        margin-top: 3px;
+        margin-right: 10px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 300;
+    }
+    
+    .leave button {
+        min-width: 70px !important;
+        min-height: 30px !important;
+        border: 1px #000;
+        background-color: #000 !important;
+        color: #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        letter-spacing: 1px;
+        margin: auto;
+    }
+    
+    .submit_button:hover,
+    .leave button:hover {
+        background-color: #212121 !important;
+    }
+    
+    .malpractice_history {
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+        background-color: #fff;
+        width: 30vw;
+        margin-left: 6.5vw;
+        height: 89vh;
+        border-radius: 6px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    
+    .record_malpractice {
+        max-width: 53vw !important;
+        background-color: #fff;
+        margin-left: 4vw;
+        border-radius: 6px;
+        height: 44.6vh;
+        padding: 15px;
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+    
+    .malpractice_history::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .malpractice_graph {
+        width: 53vw;
+        height: 32vh;
+        margin-top: 5vh;
+        background-color: #fff;
+        margin-left: 4vw;
+        border-radius: 6px;
+        padding: 15px;
+    }
+    
+    .malpractice_graph h3,
+    .record_malpractice h3 {
+        font-size: 14px;
+        color: #d00073;
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 300 !important;
+        text-align: center;
+        text-transform: uppercase;
+    }
+    
+    .record_malpractice h3 {
+        margin-bottom: 5vh;
+    }
+    
+    .record_malpractice label {
+        font-family: 'Poppins', sans-serif;
+        margin-right: 10px;
+        margin-top: 3px;
+    }
+    
+    .record_malpractice input {
+        font-family: 'Poppins', sans-serif;
+        margin-right: 10px;
+        margin-top: 3px;
+        width: fit-content;
+        height: 28px;
+    }
+    
+    .submit_button {
+        min-width: 70px !important;
+        min-height: 30px !important;
+        border: 1px #000;
+        background-color: #000 !important;
+        color: #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        letter-spacing: 1px;
+        margin-left: 45%;
     }
