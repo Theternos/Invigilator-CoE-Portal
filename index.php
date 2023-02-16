@@ -27,7 +27,6 @@ include 'calender.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invigilator | Dashboard</title>
     <link rel="stylesheet" href="./css/new_style.css" />
-    <link href="./css/calender.css" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/x-icon" href="/assets/icon.png">
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800" rel="stylesheet">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'>

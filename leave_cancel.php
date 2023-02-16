@@ -32,7 +32,7 @@ if (isset($_POST['leave_accept'])) {
         $sql = "update invigilation.staff set date_time = '" . $roww['date_time'] . "' where email = '$username' and status = 'UPCOMING'";
         $result = mysqli_query($link, $sql);
     }
-    header('location: index.php');
+    header('location: ./admin/leave_approve.php');
 }
 if (isset($_POST['leave_reject_CoE'])) {
     $name = $_POST['name'];

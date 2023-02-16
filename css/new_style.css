@@ -1038,3 +1038,23 @@
         letter-spacing: 1px;
         margin-left: 45%;
     }
+    
+    .add_announcement {
+        min-width: 95% !important;
+        min-height: 42px;
+        padding: 5px;
+        border-radius: 5px;
+        border: 0;
+        box-shadow: 0 0 2px 2px rgba(146, 146, 146, 0.203);
+        margin-top: 5px;
+    }
+    
+    .add_announcement_button {
+        width: 70px;
+        height: 26px;
+        background-color: #000;
+        color: #fdfdfd;
+        border-radius: 5px;
+        margin-top: 7px;
+        margin-left: 38%;
+    }
