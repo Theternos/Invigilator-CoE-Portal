@@ -287,7 +287,7 @@ include 'calender.php';
 
         </div>
         <div class="initia">
-            <h5>MUTUAL ALTER REQUEST</h5>
+            <h5>MUTUAL ALTER / LEAVE REQUEST</h5>
             <?php
             $sql2 = "SELECT * from `invigilation`.`leave` where alt_mail = '$username' and status = 'INITIATED' and state = '0'";
             $result2 = mysqli_query($link, $sql2);

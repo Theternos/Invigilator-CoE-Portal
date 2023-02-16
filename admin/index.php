@@ -92,52 +92,23 @@ include 'calender.php';
                 </div>
 
             </div>
-            <div class="initia">
-                <h5>MUTUAL ALTER REQUEST</h5>
+            <div class="initia admin_initia">
+                <h5>VISUALIZE THE INVIGILATORS ACTIVITY</h5>
+                <div id="chartContainer" style="height: 320px; width: 100%;"></div>
                 <?php
-                $sql2 = "SELECT * from `invigilation`.`leave` where alt_mail = '$username' and status = 'INITIATED' and state = '0'";
-                $result2 = mysqli_query($link, $sql2);
-                $row2 = mysqli_fetch_assoc($result2);
-                $sql3 = "SELECT * from `invigilation`.`leave` where alt_mail = '$username' and status = 'INITIATED' and state = '1'";
-                $result3 = mysqli_query($link, $sql3);
-                $row3 = mysqli_fetch_assoc($result3);
-                if ($row2['alt_mail'] == $username) { ?>
-                    <p style="margin-top: 3px;">Hey! ✨ You have a substitution on <?php echo $row2['date_time'] ?></p>
-                    <div class="leave_accept_reject">
-                        <form action="leave_cancel.php" method="POST">
-                            <input type="hidden" name='alt_mail' value='<?php echo $row['alt_mail'] ?>'>
-                            <input type="hidden" name='date_time' value='<?php echo $row['date_time'] ?>'>
-                            <button class="leave_cancel" name="leave_accept" onclick="return confirm('Are you sure you want to Accept?')">ACCEPT</button>
-                        </form>
-                        <form action="leave_cancel.php" method="POST">
-                            <input type="hidden" name='alt_mail' value='<?php echo $row['alt_mail'] ?>'>
-                            <input type="hidden" name='date_time' value='<?php echo $row['date_time'] ?>'>
-                            <button class="leave_cancel red" name="leave_reject" onclick="return confirm('Are you sure you want to Reject?')">REJECT</button>
-                        </form>
-                    </div>
-                <?php
-                } elseif ($row3['alt_mail'] == $username and $row3['leave_type'] == 'Leave') {
-                    echo "<h3>Waiting for CoE's approval for the substitution invigilation duty.</h3>";
-                } else {
-                    echo "<h3>Hurray! No New Requests💥</h3>";
-                } ?>
+                $dataPoints = array(
+                    array("y" => 73, "label" => "Collected"),
+                    array("y" => 27, "label" => "Submitted"),
+                );
+                ?>
             </div>
-            <div style="height:14vh" class="initia">
-                <h5>ADD LATEST ANNOUNCEMENTS & NEWS</h5>
-                <form action="action" method="POST">
-                    <textarea name="add_announcement" class="add_announcement" type="text"></textarea>
-                    <button class="add_announcement_button">Update</button>
-                </form>
 
-            </div>
         </div>
         <div style="margin-left:0;" class="initial_0">
             <div class="initial">
                 <div style="margin-left:0; margin-right:3.8vw;" class="color_box">
-                    <video autoplay muted loop id="myVideo">
-                        <source src="../assets/web-bg.webm" type="video/mp4">
-                    </video>
-                    <h2>coe <span>Portal</span></h2>
+                    <img src="../assets/bg-image.jpg" alt="CoE Portal" width="150%" />
+                    <h2 style="  position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">coe <span>Portal</span></h2>
                 </div>
                 <div class="initial_1">
                     <div class="greet">
@@ -150,14 +121,14 @@ include 'calender.php';
                         $sql = "SELECT * FROM user_data WHERE student_official_email_id = '$username'";
                         $result = mysqli_query($link, $sql);
                         $row = mysqli_fetch_assoc($result);
-                        if ($greeting_time <= '05:45' and $greeting_time >= '00:00')
-                            echo '<img src="../assets/moon.png" alt="Weather Image" width="110px">';
-                        elseif ($greeting_time <= '23:59' and $greeting_time >= '19:00')
-                            echo '<img src="../assets/moon.png" alt="Weather Image" width="110px">';
 
-                        else
-                            echo '<img src="../assets/cloudy.png" alt="Weather Image" width="110px">';
-                        ?>
+                        if ($greeting_time <= '05:45' and $greeting_time >= '00:00') { ?>
+                            <img src="../asset/moon.png" alt="Weather Image" width="110px">
+                        <?php  } elseif ($greeting_time <= '23:59' and $greeting_time >= '19:00') { ?>
+                            <img src="../asset/moon.png" alt="Weather Image" width="110px">
+                        <?php } else { ?>
+                            <img src="../assets/cloudy.png" alt="Weather Image" width="110px">
+                        <?php } ?>
                         <p><span style="font-size: 22px;"><?php echo $kelvin ?>°C</span></p>
                         <h4 style="letter-spacing: 1px;font-size: 13px;">
                             <?php
@@ -205,127 +176,19 @@ include 'calender.php';
                 </div>
 
             </div>
-            <div class="initial_2">
-                <p>Events for You</p>
-                <div class="main_events">
-                    <div class="events">
-                        <div class="event_topic">
-                            <img src="./assets/calender.png" alt="calender icon">
-                            <ul><a href="">On Going Events</a></ul>
-                        </div>
-                        <div class="event_details">
-                            <div class="event_time">
-                                <img src="./assets/time.png" alt="time  icon" height="10%">
-                                <?php
-                                $sql = "SELECT * FROM staff WHERE email = '$username' and `status` = 'ONGOING' LIMIT 1";
-                                $result = mysqli_query($link, $sql);
-                                if ($result->num_rows > 0) {
-                                    while ($row = mysqli_fetch_assoc($result)) { ?>
-                                        <p class="date">
-                                            <?php
-                                            if ($row['date_time'] == null) {
-                                                echo 'No Ongoing Events';
-                                            } else {
-                                                echo $row['date_time'];
-                                            } ?>
-                            </div>
-                            <P class="venue">Venue: &nbsp;<span>
-                                    <?php
-                                        if ($row['venue'] == null) {
-                                            echo 'Will be alloted soon';
-                                        } else {
-                                            echo $row['venue'];
-                                        }
-                                    ?>
-                                </span></P>
-                            <p class="event_status">Status: &nbsp;<i style="color: #00ff00;" class="fa fa-circle" aria-hidden="true"></i>&nbsp;<span> Attending | <?php echo $row['exam_name'] ?></span></p>
-                        <?php }
-                                } else { ?>
-                        <p class='date'>No Ongoing Events</p>
-                        </div>
-                        <P class="venue">Venue: &nbsp;<span>No Ongoing Events</span></P>
-                        <p class="event_status">Status: &nbsp;<i style="color: #00ff00;" class="fa fa-circle" aria-hidden="true"></i>&nbsp;<span>No Ongoing Events</span></p>
-                    <?php
-                                } ?>
-                    </div>
+            <div class="admin_initial_2">
+                <div style="margin-top:0" class="initia add_announcements">
+                    <h5>ADD LATEST ANNOUNCEMENTS & NEWS</h5>
+                    <form action="action" method="POST">
+                        <textarea style="min-height:15vh; margin-top: 3vh;" name="add_announcement" class="add_announcement" type="text"></textarea>
+                        <button class="add_announcement_button">Update</button>
+                    </form>
                 </div>
-                <div class="events">
-                    <div class="event_topic">
-                        <img src="./assets/calender.png" alt="calender icon">
-                        <ul><a href="">Upcoming Events</a></ul>
-                    </div>
-                    <div class="event_details">
-                        <div class="event_time">
-                            <img src="./assets/time.png" alt="time  icon" height="10%">
-                            <?php
-                            $sql = "SELECT * FROM staff WHERE email = '$username' and `status` = 'UPCOMING' LIMIT 1";
-                            $result = mysqli_query($link, $sql);
-                            if ($result->num_rows > 0) {
-                                while ($row = mysqli_fetch_assoc($result)) { ?>
-                                    <p class='date'><?php echo $row['date_time'] ?></p>
-                        </div>
-                        <P class="venue">Venue: &nbsp;<span>
-                                <?php
-                                    if ($row['venue'] == null) {
-                                        echo 'Will be alloted soon';
-                                    } else {
-                                        echo $row['venue'];
-                                    }
-                                ?>
-                            </span></P>
-                        <p class="event_status">Status: &nbsp;<i style="color: #fdc60f;" class="fa fa-circle" aria-hidden="true"></i>&nbsp;<span> Upcoming | <?php echo $row['exam_name'] ?></span></p>
-                    <?php
-                                }
-                            } else { ?>
-                    <p class='date'>No Upcoming Events</p>
-                    </div>
-                    <P class="venue">Venue: &nbsp;<span>No Upcoming Events</span></P>
-                    <p class="event_status">Status: &nbsp;<i style="color: #fdc60f;" class="fa fa-circle" aria-hidden="true"></i>&nbsp;<span>No Upcoming Events</span></p>
-                <?php
-                            }
-                ?>
+                <div class="admin_other_main">
+                    <h5>hey</h5>
                 </div>
-            </div>
-            <div class="events">
-                <div class="event_topic">
-                    <img src="./assets/calender.png" alt="calender icon">
-                    <ul><a href="">Ended Events</a></ul>
-                </div>
-                <div class="event_details">
-                    <div class="event_time">
-                        <img src="./assets/time.png" alt="time  icon" height="10%">
-                        <?php
-                        $sql = "SELECT * FROM staff WHERE email = '$username' and `status` = 'ENDED' LIMIT 1";
-                        $result = mysqli_query($link, $sql);
-                        if ($result->num_rows > 0) {
-
-
-                            while ($row = mysqli_fetch_assoc($result)) { ?>
-                                <p class="date"><?php echo $row['date_time'] ?></p>
-                    </div>
-                    <P class="venue">Venue: &nbsp;<span>
-                            <?php
-                                if ($row['venue'] == null) {
-                                    echo 'Will be alloted soon';
-                                } else {
-                                    echo $row['venue'];
-                                }
-                            ?></span></P>
-                    <p class="event_status">Status: &nbsp;<i style="color: red;" class="fa fa-circle" aria-hidden="true"></i>&nbsp;<span> Ended | <?php echo $row['exam_name'] ?></span></p>
-                <?php }
-                        } else { ?>
-                <p class='date'>No Ended Events</p>
-                </div>
-                <P class="venue">Venue: &nbsp;<span>No Ended Events</span></P>
-                <p class="event_status">Status: &nbsp;<i style="color: red;" class="fa fa-circle" aria-hidden="true"></i>&nbsp;<span>No Ended Events</span></p>
-            <?php
-                        }
-            ?>
             </div>
         </div>
-    </div>
-    </div>
-    </div>
 
     </div>
 </body>
@@ -343,15 +206,12 @@ include 'calender.php';
 
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
-            exportEnabled: true,
-            theme: "light1",
-            axisY: {
-                includeZero: true
-            },
+
             data: [{
-                type: "column",
-                indexLabelFontColor: "#5A5757",
-                indexLabelPlacement: "outside",
+                type: "doughnut",
+                startAngle: 240,
+                yValueFormatString: "##0.00\"%\"",
+                indexLabel: "{label} {y}",
                 dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
             }]
         });
@@ -378,6 +238,6 @@ include 'calender.php';
     }
 </script>
 <script src='//https://code.jquery.com/jquery-1.9.1.js'></script>
-<script src="//https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 </html>

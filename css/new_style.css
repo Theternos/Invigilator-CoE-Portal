@@ -329,6 +329,15 @@
         left: -140px;
     }
     
+    .color_box img {
+        position: absolute;
+        object-fit: cover;
+        max-width: 60vw;
+        height: 54vh;
+        border-radius: 5px;
+        left: -140px;
+    }
+    
     .color_box h2 {
         text-align: center;
         font-size: 35px;
@@ -356,6 +365,10 @@
     .initial {
         display: flex;
         flex-direction: row;
+    }
+    
+    .admin_initia {
+        min-height: 34.5vh !important;
     }
     
     .leave_accept_reject {
@@ -462,6 +475,30 @@
         height: 100%;
         flex-direction: column;
         justify-content: flex-end;
+    }
+    
+    .admin_initial_2 {
+        display: flex;
+        flex-direction: row;
+        margin-top: 4.5vh;
+        padding-bottom: 0;
+    }
+    
+    .add_announcements {
+        margin-bottom: 0;
+        background-color: #fff;
+        border-radius: 6px;
+        padding: 20px;
+        width: 22vw;
+        min-height: 26.2vh;
+    }
+    
+    .admin_other_main {
+        width: 35vw;
+        border-radius: 6px;
+        margin-left: 3vw;
+        background-color: #fff;
+        padding: 10px;
     }
     
     .add-todo input {
@@ -1047,6 +1084,7 @@
         border: 0;
         box-shadow: 0 0 2px 2px rgba(146, 146, 146, 0.203);
         margin-top: 5px;
+        background-color: #fff;
     }
     
     .add_announcement_button {
