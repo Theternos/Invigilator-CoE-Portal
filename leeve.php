@@ -882,3 +882,24 @@ error_reporting(0);
 
 
 </html>
+
+
+
+                                $leave_table = "SELECT * FROM `leave` WHERE `status` = 'REJECTED'";
+                                $leave_result = mysqli_query($link, $leave_table);
+                                while ($leave_row = mysqli_fetch_assoc($leave_result)) {
+                                    if ($leave_row['mail'] != null and $leave_row['mail'] == $username) {
+                                        $temp1 = array_search($leave_row['date_time'], $date_time);
+                                        $leave_table = "SELECT * FROM `leave` WHERE `status` = 'REJECTED'";
+                                        $leave_result = mysqli_query($link, $leave_table);
+                                        while ($leave_row = mysqli_fetch_assoc($leave_result)) {
+                                ?>
+                                            <option value="<?php echo $leave_row['date_time'] ?>"><?php echo $leave_row['date_time'] ?> </option>
+                                        <?php }
+                                        unset($date_time[$temp1]);
+                                        foreach ($date_time as $value) {
+                                        ?>
+                                            <option value="<?php echo $value ?>"><?php echo $value ?> </option>
+                                <?php                        }
+                                    }
+                                }

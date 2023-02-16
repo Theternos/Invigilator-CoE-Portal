@@ -1,5 +1,10 @@
 <?php
-include('config.php');
+include 'config.php';
+
+session_start();
+
+$username = $_SESSION["username"];
+
 if (isset($_POST['leave_type'])) {
     $leave_type = $_POST['leave_type'];
     $date_time = $_POST['date_time'];
@@ -26,7 +31,7 @@ if (isset($_POST['leave_type'])) {
             }
         }
     } elseif ($leave_type == 'Mutual Interchange') {
-        $sql = "SELECT * FROM invigilation.staff WHERE status= 'UPCOMING'";
+        $sql = "SELECT * FROM invigilation.staff WHERE status= 'UPCOMING' and email != '$username'";
         $result = mysqli_query($link, $sql);
         $sql1 = "SELECT * FROM invigilation.leave";
         $result1 = mysqli_query($link, $sql1);
@@ -44,7 +49,11 @@ if (isset($_POST['leave_type'])) {
                     $sqll = mysqli_query($link, "SELECT * FROM invigilation.user_data");
                     while ($roww = mysqli_fetch_assoc($sqll))
                         if ($row['email'] == $roww['student_official_email_id']) ?>
-                    <option value="<?php echo $row['staff']; ?>"><?php echo $row['staff'] ?></option>
+                    <option value="<?php echo $row['staff']; ?>"><?php echo $row['staff'];
+                                                                    echo ' :-  [ ';
+                                                                    echo $row['date_time'];
+                                                                    echo '  ] ';
+                                                                    ?></option>
 <?php }
             }
         }

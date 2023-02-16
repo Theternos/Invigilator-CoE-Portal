@@ -57,34 +57,39 @@ error_reporting(0);
                                 <option value="0"> -- SELECT -- </option>
                                 <?php
                                 $staff_table = "SELECT * FROM `staff` WHERE email = '$username' and `status` = 'UPCOMING'";
-                                //echo $staff_table;
-                                // Execute the query
                                 $staff_result = mysqli_query($link, $staff_table);
                                 $date_time = array();
-                                $staff = array();
-                                while ($staff_row = mysqli_fetch_assoc($staff_result)) {
-                                    array_push($date_time, $staff_row['date_time']);
-                                    array_push($staff, $staff_row['email']);
-                                };
-                                print_r($staff);
-                                print_r($date_time);
 
-                                $leave_table = "SELECT * FROM `leave` WHERE `status` = 'REJECTED'";
-                                $leave_result = mysqli_query($link, $leave_table);
-                                while ($leave_row = mysqli_fetch_assoc($leave_result)) {
-                                    if ($leave_row['mail'] != null and $leave_row['mail'] == $username) {
-                                        $temp1 = array_search($leave_row['date_time'], $date_time);
-                                        $leave_table = "SELECT * FROM `leave` WHERE `status` = 'REJECTED'";
-                                        $leave_result = mysqli_query($link, $leave_table);
+                                while ($staff_row = mysqli_fetch_assoc($staff_result)) {
+                                    $leave_table = "SELECT * FROM `leave` WHERE mail = '$username'";
+                                    $leave_result = mysqli_query($link, $leave_table);
+                                    if (mysqli_num_rows($leave_result) > 0) {
                                         while ($leave_row = mysqli_fetch_assoc($leave_result)) {
-                                ?>
-                                            <option value="<?php echo $leave_row['date_time'] ?>"><?php echo $leave_row['date_time'] ?> </option>
-                                        <?php }
-                                        unset($date_time[$temp1]);
-                                        foreach ($date_time as $value) {
+                                            if ($leave_row['date_time'] == $staff_row['date_time']) {
+                                                if ($leave_row['status'] == 'REJECTED' and $leave_row['checking'] == '1') {
+                                                    array_push($date_time, $leave_row['date_time']); ?>
+                                                    <option value="<?php echo $staff_row['date_time'] ?>"><?php echo $staff_row['date_time'] ?> </option>
+
+                                            <?php
+                                                }
+                                            }
+                                            array_push($date_time, $leave_row['date_time']);
+                                            $date_time = array_unique($date_time) ?>
+                                        <?php
+                                        }
+                                        $search_element = $staff_row['date_time'];
+                                        if (!in_array($search_element, $date_time)) {
+
+                                            # if ($leave_row['status'] != 'INITIATED') { 
                                         ?>
-                                            <option value="<?php echo $value ?>"><?php echo $value ?> </option>
-                                <?php                        }
+                                            <option value="<?php echo $staff_row['date_time'] ?>"><?php echo $staff_row['date_time'] ?> </option>
+                                        <?php
+                                            #    }
+                                        }
+                                    } else {
+                                        ?>
+                                        <option value="<?php echo $staff_row['date_time'] ?>"><?php echo $staff_row['date_time'] ?> </option>
+                                <?php
                                     }
                                 }
                                 ?>
@@ -117,14 +122,14 @@ error_reporting(0);
             <section class="leave_graph">
                 <h3>Visualize your activity</h3>
                 <?php
-                $sql = "SELECT COUNT(id) as COUNT FROM `leave` WHERE mail = '$username' and `status` = 'ACCEPTED' and `leave_type` = 'Leave'";
+                $sql = "SELECT COUNT(id) as COUNT FROM `leave` WHERE mail = '$username' and `status` = 'APPROVED' and `leave_type` = 'Leave'";
                 $result = mysqli_query($link, $sql);
                 if ($result->num_rows > 0) {
                     $leave_accepted_leave_row = mysqli_fetch_assoc($result);
                 } else {
                     $leave_accepted_leave_row['COUNT'] = 0;
                 }
-                $sql = "SELECT COUNT(id) as COUNT FROM `leave` WHERE mail = '$username' and `status` = 'ACCEPTED' and `leave_type` = 'Mutual Interchange'";
+                $sql = "SELECT COUNT(id) as COUNT FROM `leave` WHERE mail = '$username' and `status` = 'APPROVED' and `leave_type` = 'Mutual Interchange'";
                 $result = mysqli_query($link, $sql);
                 if ($result->num_rows > 0) {
                     $leave_accepted_mutual_row = mysqli_fetch_assoc($result);
@@ -148,8 +153,8 @@ error_reporting(0);
                 $dataPoints = array(
                     array("y" => $leave_rejected_leave_row['COUNT'], "label" => "Leave (Rejected)"),
                     array("y" => $leave_rejected_mutual_row['COUNT'], "label" => "Mutual Interchange (Rejected)"),
-                    array("y" => $leave_accepted_leave_row['COUNT'], "label" => "Leave (Accepted)"),
-                    array("y" => $leave_accepted_mutual_row['COUNT'], "label" => "Mutual Interchange (Accepted)"),
+                    array("y" => $leave_accepted_leave_row['COUNT'], "label" => "Leave (Approved)"),
+                    array("y" => $leave_accepted_mutual_row['COUNT'], "label" => "Mutual Interchange (Approved)"),
                 );
 
                 ?>

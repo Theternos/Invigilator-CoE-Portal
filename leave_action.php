@@ -30,7 +30,7 @@ if (isset($_POST['leave_insert'])) {
     $roww = mysqli_fetch_assoc($resultt);
     $exam = $roww['exam_name'];
     $batch = $roww['batch'];
-    $sql = "INSERT INTO invigilation.`leave` (`name`,leave_type,batch,exam, mail, alt_staff, alt_mail, reason, date_time, `status`) VALUES ('$name','$leave_type','$batch','$exam', '$username', '$alt_staff', '$alt_mail','$reason', '$exam_duty','INITIATED');";
+    $sql = "INSERT INTO invigilation.`leave` (`name`,leave_type,batch,exam, mail, alt_staff, alt_mail, reason, date_time, `status`, `state`, `checking`) VALUES ('$name','$leave_type','$batch','$exam', '$username', '$alt_staff', '$alt_mail','$reason', '$exam_duty','INITIATED', '0' , '0');";
     echo $sql;
     $result = mysqli_query($link, $sql);
     header('location: leave.php');

@@ -7,7 +7,7 @@ session_start();
 $username = $_SESSION["username"];
 
 if (isset($_POST['leave_reject'])) {
-    $sql = "update invigilation.leave set status = 'REJECTED' where alt_mail = '$username' and status = 'INITIATED'";
+    $sql = "update invigilation.leave set status = 'REJECTED' and checking = '1' where alt_mail = '$username' and status = 'INITIATED'";
     echo $sql;
     $result = mysqli_query($link, $sql);
     header('location: index.php');
@@ -17,26 +17,55 @@ if (isset($_POST['leave_accept'])) {
     $resultt = mysqli_query($link, $sqll);
     $roww = mysqli_fetch_assoc($resultt);
     if ($roww['leave_type'] == 'Leave') {
-        $sql = "update invigilation.leave set state = state + 1 where alt_mail = '$username' and status = 'INITIATED'";
+        $sql = "update invigilation.leave set state = 1 where alt_mail = '$username' and status = 'INITIATED'";
         $result = mysqli_query($link, $sql);
     } else {
-        $sql = "update invigilation.leave set state = state + 2 where alt_mail = '$username' and status = 'INITIATED'";
+        $sql = "update invigilation.leave set state = 2 where alt_mail = '$username' and status = 'INITIATED'";
         $result = mysqli_query($link, $sql);
         $sql = "update invigilation.leave set status = 'APPROVED' where alt_mail = '$username' and status = 'INITIATED'";
         $result = mysqli_query($link, $sql);
+
         $sql = "SELECT * FROM invigilation.staff where email = '" . $roww['alt_mail'] . "' and status = 'UPCOMING'";
         $result = mysqli_query($link, $sql);
         $row = mysqli_fetch_assoc($result);
-        $sql = "update invigilation.staff set date_time = '" . $row['date_time'] . "' where email = '" . $roww['mail'] . "' and status = 'UPCOMING'";
+        $roww_mail =  $roww['mail'];
+        $roww_staff =  $roww['alt_staff'];
+        $roww_date_time = $roww['date_time'];
+        $row_mail =  $row['email'];
+        $row_staff =  $row['staff'];
+        $date_time = $row['date_time'];
+
+
+        $sql = "update invigilation.staff set staff = '$row_staff' where email = '$roww_mail' and date_time = '$roww_date_time' and status = 'UPCOMING'";
+        echo $sql;
+        echo "<br/>";
         $result = mysqli_query($link, $sql);
-        $sql = "update invigilation.staff set date_time = '" . $roww['date_time'] . "' where email = '$username' and status = 'UPCOMING'";
+        $sql = "update invigilation.staff set email = '$row_mail' where staff = '$row_staff' and date_time = '$roww_date_time' and status = 'UPCOMING'";
+        $result = mysqli_query($link, $sql);
+        echo $sql;
+        echo "<br/>";
+
+        $sql = "SELECT * FROM invigilation.staff where email = '" . $roww['mail'] . "' and status = 'UPCOMING'";
+        $result = mysqli_query($link, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $row_staff =  $row['staff'];
+
+        $sql = "update invigilation.staff set staff = '$row_staff' where email = '$username' and date_time = '$date_time'  and status = 'UPCOMING'";
+        echo $sql;
+        echo "<br/>";
+        $result = mysqli_query($link, $sql);
+
+        $sql = "update invigilation.staff set email = '$roww_mail' where staff = '$row_staff' and date_time = '$date_time'  and status = 'UPCOMING'";
+        echo $sql;
+        echo "<br/>";
+
         $result = mysqli_query($link, $sql);
     }
-    header('location: ./admin/leave_approve.php');
+    header('location: index.php');
 }
 if (isset($_POST['leave_reject_CoE'])) {
     $name = $_POST['name'];
-    $sql = "update `invigilation`.`leave` set status = 'REJECTED' where name = '$name' and state = '1'";
+    $sql = "update `invigilation`.`leave` set status = 'REJECTED' and checking = '1' where name = '$name' and state = '1'";
     echo $sql;
     $result = mysqli_query($link, $sql);
     header('location: ./admin/leave_approve.php');

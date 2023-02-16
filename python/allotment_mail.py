@@ -6,7 +6,7 @@ date_time = sys.argv[2]
 
 server = smtplib.SMTP('smtp.gmail.com',587)
 server.starttls()
-server.login('anusuya.cs21@bitsathy.ac.in','AnusuyaPrakash')
+server.login('coebitshack@gmail.com','coesleek')
 message = '''
 Subject: Invigilation Duty - Regarding
 
@@ -23,4 +23,4 @@ Sathyamangalam-638 401
 Erode District, Tamilnadu
 Ph: 04295-226122, 226123
 '''.format(date_time)
-server.sendmail('kavinkumar.cs21@bitsathy.ac.in',email,message)
+server.sendmail('coebitshack@gmail.com',email,message)
