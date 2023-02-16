@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 12, 2023 at 04:41 AM
+-- Generation Time: Feb 16, 2023 at 03:33 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `invigilation`
 --
+CREATE DATABASE IF NOT EXISTS `invigilation` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `invigilation`;
 
 -- --------------------------------------------------------
 
@@ -46,139 +48,168 @@ INSERT INTO `admin` (`id`, `username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `biometric`
+--
+
+DROP TABLE IF EXISTS `biometric`;
+CREATE TABLE IF NOT EXISTS `biometric` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `staff_name` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `theringa` varchar(45) DEFAULT NULL,
+  `in_time` time DEFAULT NULL,
+  `out_time` time DEFAULT NULL,
+  `exam_date` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `biometric`
+--
+
+INSERT INTO `biometric` (`id`, `staff_name`, `email`, `theringa`, `in_time`, `out_time`, `exam_date`) VALUES
+(1, 'Mr Gokul K', 'gokulk@bitsathy.ac.in', NULL, '09:14:00', '11:05:00', '2023-02-15'),
+(2, 'Dr.POONGODI C', 'POONGODIC@BITSATHY.AC.IN', NULL, '09:14:00', '11:05:00', '2023-02-15'),
+(3, 'Dr.RAVI KUMAR M', 'RAVIKUMARM@bitsathy.ac.in', NULL, '09:14:00', '11:05:00', '2023-02-15');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `classroom_details`
 --
 
 DROP TABLE IF EXISTS `classroom_details`;
 CREATE TABLE IF NOT EXISTS `classroom_details` (
-  `Column_1` double DEFAULT NULL,
-  `Column_2` varchar(10) DEFAULT NULL,
-  `Column_3` varchar(10) DEFAULT NULL,
-  `Column_4` varchar(10) DEFAULT NULL
+  `Block` varchar(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `Floor` varchar(3) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `Classroom_No` varchar(6) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `Computer_Availability` varchar(3) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `Speaker_Availability` varchar(3) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `Projector_Availability` varchar(3) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `Student_Desk` decimal(3,1) DEFAULT NULL,
+  `Capacity` int DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `classroom_details`
 --
 
-INSERT INTO `classroom_details` (`Column_1`, `Column_2`, `Column_3`, `Column_4`) VALUES
-(1, 'OLD AGRI B', 'First floo', 'AG21'),
-(2, 'OLD AGRI B', 'First floo', 'AG22'),
-(3, 'OLD AGRI B', 'First floo', 'AG23'),
-(4, 'OLD AGRI B', 'First floo', 'AG24'),
-(5, 'OLD AGRI B', 'First floo', 'AG25'),
-(6, 'OLD AGRI B', 'First floo', 'AG26'),
-(7, 'OLD AGRI B', 'Second flo', 'AG31'),
-(8, 'OLD AGRI B', 'Second flo', 'AG32'),
-(9, 'OLD AGRI B', 'Second flo', 'AG33'),
-(10, 'OLD AGRI B', 'Second flo', 'AG34'),
-(11, 'OLD AGRI B', 'Second flo', 'AG35'),
-(12, 'EEE BLOCK', 'First floo', 'EE21'),
-(13, 'EEE BLOCK', 'First floo', 'EE22'),
-(14, 'EEE BLOCK', 'First floo', 'EE23'),
-(15, 'EEE BLOCK', 'First floo', 'EE24'),
-(16, 'EEE BLOCK', 'First floo', 'EE25'),
-(17, 'EEE BLOCK', 'First floo', 'EE26'),
-(18, 'EEE BLOCK', 'Second flo', 'EE31'),
-(19, 'EEE BLOCK', 'Second flo', 'EE32'),
-(20, 'EEE BLOCK', 'Second flo', 'EE33'),
-(21, 'EEE BLOCK', 'Second flo', 'EE34'),
-(22, 'EEE BLOCK', 'Second flo', 'EE35'),
-(23, 'CT BLOCK', 'First floo', 'CT21'),
-(24, 'CT BLOCK', 'First floo', 'CT22'),
-(25, 'CT BLOCK', 'First floo', 'CT23'),
-(27, 'CT BLOCK', 'First floo', 'CT25'),
-(28, 'CT BLOCK', 'First floo', 'CT26'),
-(29, 'AIDS BLOCK', 'Second flo', 'AIDS31'),
-(30, 'AIDS BLOCK', 'Second flo', 'AIDS33'),
-(31, 'AIDS BLOCK', 'Second flo', 'AIDS34'),
-(32, 'AIDS BLOCK', 'Second flo', 'AIDS35'),
-(33, 'IB BLOCK', 'First floo', 'IB102'),
-(34, 'IB BLOCK', 'First floo', 'IB103'),
-(35, 'IB BLOCK', 'First floo', 'IB104'),
-(36, 'IB BLOCK', 'First floo', 'IB105'),
-(37, 'IB BLOCK', 'First floo', 'IB106'),
-(38, 'IB BLOCK', 'First floo', 'IB107'),
-(39, 'IB BLOCK', 'First floo', 'IB108'),
-(40, 'IB BLOCK', 'First floo', 'IB111'),
-(41, 'IB BLOCK', 'First floo', 'IB112'),
-(42, 'IB BLOCK', 'Second flo', 'IB201'),
-(43, 'IB BLOCK', 'Second flo', 'IB202'),
-(44, 'IB BLOCK', 'Second flo', 'IB203'),
-(45, 'IB BLOCK', 'Second flo', 'IB204'),
-(46, 'IB BLOCK', 'Second flo', 'IB205'),
-(47, 'IB BLOCK', 'Second flo', 'IB206'),
-(48, 'IB BLOCK', 'Second flo', 'IB207'),
-(49, 'IB BLOCK', 'Second flo', 'IB208'),
-(50, 'IB BLOCK', 'Second flo', 'IB209'),
-(51, 'IB BLOCK', 'Second flo', 'IB210'),
-(52, 'IB BLOCK', 'Second flo', 'IB211'),
-(53, 'IB BLOCK', 'Second flo', 'IB212'),
-(54, 'TT BLOCK', 'First floo', 'TT21'),
-(55, 'TT BLOCK', 'First floo', 'TT22'),
-(56, 'TT BLOCK', 'First floo', 'TT23'),
-(57, 'TT BLOCK', 'First floo', 'TT24'),
-(58, 'TT BLOCK', 'First floo', 'TT25'),
-(59, 'TT BLOCK', 'First floo', 'TT26'),
-(60, 'TT BLOCK', 'Second flo', 'TT31'),
-(61, 'TT BLOCK', 'Second flo', 'TT32'),
-(62, 'TT BLOCK', 'Second flo', 'TT33'),
-(63, 'TT BLOCK', 'Second flo', 'TT34'),
-(64, 'TT BLOCK', 'Second flo', 'TT35'),
-(65, 'TT BLOCK', 'Second flo', 'TT36'),
-(66, 'ECE BLOCK', 'First floo', 'EC21'),
-(67, 'ECE BLOCK', 'First floo', 'EC22'),
-(68, 'ECE BLOCK', 'First floo', 'EC23'),
-(70, 'ECE BLOCK', 'First floo', 'EC25'),
-(71, 'ECE BLOCK', 'First floo', 'EC26'),
-(72, 'ECE BLOCK', 'Second flo', 'EC31'),
-(73, 'ECE BLOCK', 'Second flo', 'EC32'),
-(74, 'ECE BLOCK', 'Second flo', 'EC33'),
-(75, 'ECE BLOCK', 'Second flo', 'EC34'),
-(76, 'ECE BLOCK', 'Second flo', 'EC35'),
-(77, 'ECE BLOCK', 'Second flo', 'EC36'),
-(78, 'CIVIL BLOC', 'First floo', 'CE21'),
-(79, 'CIVIL BLOC', 'First floo', 'CE22'),
-(80, 'CIVIL BLOC', 'First floo', 'CE23'),
-(81, 'CIVIL BLOC', 'First floo', 'CE24'),
-(82, 'CIVIL BLOC', 'First floo', 'CE25'),
-(83, 'CIVIL BLOC', 'First floo', 'CE26'),
-(84, 'CIVIL BLOC', 'Second flo', 'CE31'),
-(85, 'CIVIL BLOC', 'Second flo', 'CE32'),
-(86, 'CIVIL BLOC', 'Second flo', 'CE33'),
-(87, 'CIVIL BLOC', 'Second flo', 'CE34'),
-(88, 'CIVIL BLOC', 'Second flo', 'CE35'),
-(89, 'CIVIL BLOC', 'Second flo', 'CE36'),
-(90, 'MECHANICAL', 'First floo', 'ME102'),
-(91, 'MECHANICAL', 'First floo', 'ME103'),
-(92, 'MECHANICAL', 'First floo', 'ME104'),
-(93, 'MECHANICAL', 'First floo', 'ME105'),
-(94, 'MECHANICAL', 'First floo', 'ME106'),
-(95, 'MECHANICAL', 'First floo', 'ME107'),
-(96, 'MECHANICAL', 'First floo', 'ME108'),
-(97, 'MECHANICAL', 'Second flo', 'ME201'),
-(98, 'MECHANICAL', 'Second flo', 'ME202'),
-(99, 'MECHANICAL', 'Second flo', 'ME203'),
-(100, 'MECHANICAL', 'Second flo', 'ME204'),
-(101, 'MECHANICAL', 'Second flo', 'ME205'),
-(102, 'MECHANICAL', 'Second flo', 'ME206'),
-(103, 'MECHANICAL', 'Third floo', 'ME301'),
-(104, 'MECHANICAL', 'Third floo', 'ME302'),
-(105, 'MECHANICAL', 'Third floo', 'ME303'),
-(106, 'MECHANICAL', 'Third floo', 'ME304'),
-(107, 'MECHANICAL', 'Third floo', 'ME305'),
-(108, 'MECHANICAL', 'Third floo', 'ME306'),
-(109, 'SF BLOCK', 'Basement', 'IT001'),
-(110, 'SF BLOCK', 'Basement', 'IT002'),
-(111, 'SF BLOCK', 'Basement', 'IT003'),
-(112, 'SF BLOCK', 'First floo', 'IT101'),
-(113, 'SF BLOCK', 'First floo', 'IT102'),
-(114, 'SF BLOCK', 'Second flo', 'CS201'),
-(115, 'SF BLOCK', 'Second flo', 'CS202'),
-(116, 'SF BLOCK', 'Second flo', 'CS203'),
-(117, 'SF BLOCK', 'Third floo', 'AM301'),
-(118, 'SF BLOCK', 'Third floo', 'CS302'),
-(119, 'SF BLOCK', 'Third floo', 'CS303');
+INSERT INTO `classroom_details` (`Block`, `Floor`, `Classroom_No`, `Computer_Availability`, `Speaker_Availability`, `Projector_Availability`, `Student_Desk`, `Capacity`) VALUES
+('Mechanical Block', 'I', 'ME103', 'Yes', 'No', 'Yes', '45.0', 90),
+('Mechanical Block', 'I', 'ME104', 'Yes', 'No', 'Yes', '45.0', 90),
+('Mechanical Block', 'I', 'ME105', 'Yes', 'No', 'Yes', '45.0', 90),
+('Mechanical Block', 'I', 'ME106', 'Yes', 'No', 'Yes', '45.0', 90),
+('Mechanical Block', 'II', 'ME201', 'Yes', 'Yes', 'Yes', '45.0', 90),
+('Mechanical Block', 'II', 'ME202', 'Yes', 'Yes', 'Yes', '45.0', 90),
+('Mechanical Block', 'II', 'ME203', 'Yes', 'Yes', 'Yes', '45.0', 90),
+('Mechanical Block', 'II', 'ME204', 'Yes', 'Yes', 'Yes', '45.0', 90),
+('Mechanical Block', 'II', 'ME205', 'Yes', 'Yes', 'Yes', '45.0', 90),
+('Mechanical Block', 'II', 'ME206', 'Yes', 'Yes', 'Yes', '45.0', 90),
+('Mechanical Block', 'III', 'ME301', 'Yes', 'Yes', 'Yes', '45.0', 90),
+('Mechanical Block', 'III', 'ME302', 'Yes', 'Yes', 'Yes', '45.0', 90),
+('Mechanical Block', 'III', 'ME303', 'Yes', 'Yes', 'Yes', '45.0', 90),
+('Mechanical Block', 'III', 'ME304', 'Yes', 'Yes', 'Yes', '45.0', 90),
+('Mechanical Block', 'III', 'ME305', 'Yes', 'Yes', 'Yes', '45.0', 90),
+('Mechanical Block', 'III', 'ME306', 'Yes', 'Yes', 'Yes', '45.0', 90),
+('Sunflower Block', '0.0', 'IT001', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('Sunflower Block', '0.0', 'IT002', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('Sunflower Block', '0.0', 'IT003', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('Sunflower Block', 'I', 'IT101', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('Sunflower Block', 'I', 'IT102', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('Sunflower Block', 'II', 'CS201', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('Sunflower Block', 'II', 'CS202', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('Sunflower Block', 'II', 'CS203', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('Sunflower Block', 'III', 'CS301', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('Sunflower Block', 'III', 'CS302', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('Sunflower Block', 'III', 'CS303', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('ECE Block', 'I', 'EC21', 'Yes', 'No', 'Yes', '30.0', 60),
+('ECE Block', 'I', 'EC22', 'Yes', 'No', 'Yes', '30.0', 60),
+('ECE Block', 'I', 'EC23', 'Yes', 'No', 'Yes', '30.0', 60),
+('ECE Block', 'I', 'EC25', 'Yes', 'No', 'Yes', '30.0', 60),
+('ECE Block', 'I', 'EC26', 'Yes', 'No', 'Yes', '30.0', 60),
+('ECE Block', 'II', 'EC31', 'Yes', 'No', 'Yes', '30.0', 60),
+('ECE Block', 'II', 'EC32', 'Yes', 'No', 'Yes', '30.0', 60),
+('ECE Block', 'II', 'EC33', 'Yes', 'No', 'Yes', '30.0', 60),
+('ECE Block', 'II', 'EC34', 'Yes', 'No', 'Yes', '20.0', 40),
+('ECE Block', 'II', 'EC35', 'Yes', 'No', 'Yes', '20.0', 40),
+('ECE Block', 'II', 'EC36', 'Yes', 'No', 'Yes', '60.0', 120),
+('CIVIL Block', 'I', 'CE21', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CIVIL Block', 'I', 'CE22', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CIVIL Block', 'I', 'CE23', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CIVIL Block', 'I', 'CE24', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CIVIL Block', 'I', 'CE25', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CIVIL Block', 'I', 'CE26', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CIVIL Block', 'II', 'CE31', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CIVIL Block', 'II', 'CE32', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CIVIL Block', 'II', 'CE33', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CIVIL Block', 'II', 'CE34', 'Yes', 'Yes', 'Yes', '20.0', 40),
+('CIVIL Block', 'II', 'CE35', 'Yes', 'Yes', 'Yes', '20.0', 40),
+('CIVIL Block', 'II', 'CE36', 'Yes', 'Yes', 'Yes', '60.0', 120),
+('Textile Block', 'I', 'TT21', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('Textile Block', 'I', 'TT22', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('Textile Block', 'I', 'TT23', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('Textile Block', 'I', 'TT24', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('Textile Block', 'I', 'TT25', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('Textile Block', 'I', 'TT26', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('Textile Block', 'II', 'TT31', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('Textile Block', 'II', 'TT32', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('Textile Block', 'II', 'TT33', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('Textile Block', 'II', 'TT34', 'Yes', 'Yes', 'Yes', '20.0', 40),
+('Textile Block', 'II', 'TT35', 'Yes', 'Yes', 'Yes', '20.0', 40),
+('Textile Block', 'II', 'TT36', 'Yes', 'Yes', 'Yes', '60.0', 120),
+('Old AGRI Block', 'I', 'AG21', 'Yes', 'No', 'Yes', '30.0', 60),
+('Old AGRI Block', 'I', 'AG22', 'Yes', 'No', 'Yes', '30.0', 60),
+('Old AGRI Block', 'I', 'AG23', 'Yes', 'No', 'Yes', '30.0', 60),
+('Old AGRI Block', 'I', 'AG24', 'Yes', 'No', 'Yes', '30.0', 60),
+('Old AGRI Block', 'I', 'AG25', 'Yes', 'No', 'Yes', '30.0', 60),
+('Old AGRI Block', 'I', 'AG26', 'Yes', 'No', 'Yes', '30.0', 60),
+('Old AGRI Block', 'II', 'AG31', 'Yes', 'No', 'Yes', '30.0', 60),
+('Old AGRI Block', 'II', 'AG32', 'Yes', 'No', 'Yes', '60.0', 120),
+('Old AGRI Block', 'II', 'AG33', 'Yes', 'No', 'Yes', '30.0', 60),
+('Old AGRI Block', 'II', 'AG34', 'Yes', 'No', 'Yes', '30.0', 60),
+('Old AGRI Block', 'II', 'AG35', 'Yes', 'No', 'Yes', '30.0', 60),
+('EEE Block', 'I', 'EE21', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('EEE Block', 'I', 'EE22', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('EEE Block', 'I', 'EE23', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('EEE Block', 'I', 'EE24', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('EEE Block', 'I', 'EE25', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('EEE Block', 'I', 'EE26', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('EEE Block', 'II', 'EE31', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('EEE Block', 'II', 'EE32', 'Yes', 'Yes', 'Yes', '60.0', 120),
+('EEE Block', 'II', 'EE33', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('EEE Block', 'II', 'EE34', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('EEE Block', 'II', 'EE35', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CT & AIDS Block', 'I', 'CT21', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CT & AIDS Block', 'I', 'CT22', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CT & AIDS Block', 'I', 'CT23', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CT & AIDS Block', 'I', 'CT25', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CT & AIDS Block', 'I', 'CT26', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CT & AIDS Block', 'II', 'AIDS31', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CT & AIDS Block', 'II', 'AIDS33', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CT & AIDS Block', 'II', 'AIDS34', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('CT & AIDS Block', 'II', 'AIDS35', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('IB Block', '0.0', 'IB102', 'Yes', 'Yes', 'Yes', '20.0', 40),
+('IB Block', '0.0', 'IB103', 'Yes', 'Yes', 'Yes', '20.0', 40),
+('IB Block', '0.0', 'IB104', 'Yes', 'Yes', 'Yes', '20.0', 40),
+('IB Block', '0.0', 'IB105', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('IB Block', '0.0', 'IB106', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('IB Block', '0.0', 'IB107', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('IB Block', '0.0', 'IB108', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('IB Block', '0.0', 'IB111', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('IB Block', '0.0', 'IB112', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('IB Block', 'II', 'IB201', 'Yes', 'Yes', 'Yes', '20.0', 40),
+('IB Block', 'II', 'IB202', 'Yes', 'Yes', 'Yes', '20.0', 40),
+('IB Block', 'II', 'IB203', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('IB Block', 'II', 'IB204', 'Yes', 'Yes', 'Yes', '30.0', 60),
+('IB Block', 'II', 'IB205', 'Yes', 'Yes', 'Yes', '20.0', 40),
+('IB Block', 'II', 'IB206', 'Yes', 'Yes', 'Yes', '20.0', 40),
+('IB Block', 'II', 'IB207', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('IB Block', 'II', 'IB208', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('IB Block', 'II', 'IB209', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('IB Block', 'II', 'IB210', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('IB Block', 'II', 'IB211', 'Yes', 'Yes', 'Yes', '40.0', 80),
+('IB Block', 'II', 'IB212', 'Yes', 'Yes', 'Yes', '40.0', 80);
 
 -- --------------------------------------------------------
 
@@ -278,9 +309,87 @@ INSERT INTO `exam_details` (`id`, `batch`, `exam_name`, `date`, `ftime`, `ttime`
 (1, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30', '09:30', '11:00', 'UPCOMING', 'RECRUITED', '2023-03-30 / 09:30 - 11:00'),
 (2, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30', '14:45', '15:15', 'UPCOMING', 'NOT RECRUITED', '2023-03-30 / 14:45 - 15:15'),
 (3, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-31', '09:30', '11:00', 'UPCOMING', 'NOT RECRUITED', '2023-03-31 / 09:30 - 11:00'),
-(4, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-31', '14:45', '15:15', 'UPCOMING', 'NOT RECRUITED', '2023-03-31 / 14:45 - 15:15'),
+(4, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-31', '14:45', '15:15', 'UPCOMING', 'RECRUITED', '2023-03-31 / 14:45 - 15:15'),
 (5, 'UG 2nd Year Even Semester', 'PT - 1', '2023-04-01', '09:30', '11:00', 'UPCOMING', 'NOT RECRUITED', '2023-04-01 / 09:30 - 11:00'),
-(6, 'UG 2nd Year Even Semester', 'PT - 1', '2023-04-01', '14:45', '15:15', 'UPCOMING', 'NOT RECRUITED', '2023-04-01 / 14:45 - 15:15');
+(6, 'UG 2nd Year Even Semester', 'PT - 1', '2023-04-01', '14:45', '15:15', 'UPCOMING', 'RECRUITED', '2023-04-01 / 14:45 - 15:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `form`
+--
+
+DROP TABLE IF EXISTS `form`;
+CREATE TABLE IF NOT EXISTS `form` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `person_id` varchar(200) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `capacity` varchar(200) NOT NULL,
+  `allocated_room_name` varchar(200) DEFAULT NULL,
+  `room_type` varchar(200) NOT NULL,
+  `proposal` varchar(200) NOT NULL,
+  `f_date` date NOT NULL,
+  `t_date` date NOT NULL,
+  `f_time` time NOT NULL,
+  `t_time` time NOT NULL,
+  `projector` varchar(200) NOT NULL,
+  `wifi` varchar(200) NOT NULL,
+  `systems` varchar(200) NOT NULL,
+  `speaker` int NOT NULL,
+  `approval` varchar(200) DEFAULT NULL,
+  `state` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `form`
+--
+
+INSERT INTO `form` (`id`, `name`, `person_id`, `email`, `capacity`, `allocated_room_name`, `room_type`, `proposal`, `f_date`, `t_date`, `f_time`, `t_time`, `projector`, `wifi`, `systems`, `speaker`, `approval`, `state`) VALUES
+(13, 'divakar', 'abvc123', 'sabxnd@gmail.comnsmn', '40', 'ct209', 'CLASS ROOM', 'Workshop', '2022-10-16', '2022-10-23', '23:01:00', '22:59:00', 'YES', 'YES', '', 0, 'approved', 0),
+(14, 'nisha', '45634', 'qwnd@gmail.com', '30', 'MECH89', 'TBI DISCUSSION ROOM', 'Seminar', '2022-10-20', '2022-10-30', '20:04:00', '20:04:00', 'NO', 'NO', '', 0, 'approved', 0),
+(15, 'SRIKANTH M', '1234', 'srikanth.ct21@bitsathy.ac.in', '30', 'CSE96', 'TBI DISCUSSION ROOM', 'School Training', '2022-09-20', '2022-09-30', '21:53:00', '21:53:00', 'NO', 'NO', '', 0, 'approved', 0),
+(17, 'sankar', 'abvc123', 'sabxnd@gmail.comnsmn', '120', 'ct209', 'TBI DISCUSSION ROOM', 'coe', '2022-09-01', '2022-09-10', '22:29:00', '22:30:00', 'NO', 'NO', '', 0, 'approved', 1),
+(18, 'anuj', 'CT1234', 'anuj.ct21@bitsathy.ac.in', '40', 'ct103', 'CLASS ROOM', 'Academics', '2022-10-08', '2022-10-11', '08:45:00', '16:30:00', 'YES', 'YES', '', 2, 'approved', 0),
+(20, 'hari', '0987', 'hari@gmail.com', '60', 'ct209', 'CLASS ROOM', 'Workshop', '2022-10-13', '2022-10-14', '04:00:00', '08:00:00', 'YES', 'NO', '', 0, 'approved', 0),
+(21, 'hari', '0987', 'hari@gmail.com', '40', 'CT23', 'CONFERENCE HALL', 'School Training', '2022-10-15', '2022-10-25', '03:00:00', '10:01:00', 'NO', 'NO', '', 0, 'approved', 0),
+(22, 'dhana', '86u40', 'dhana@gmail.com', '60', 'CT23', 'TBI DISCUSSION ROOM', 'School Training', '2022-10-20', '2022-10-20', '05:10:00', '06:20:00', 'YES', 'YES', '', 0, 'approved', 0),
+(24, 'xyz', 'xv123', 'adsgh@gmail.com', '40', NULL, 'CLASS ROOM', 'Academics', '2022-10-20', '2022-10-20', '01:40:00', '05:00:00', 'NO', 'NO', '', 0, 'pending', 0),
+(25, 'siva', 'siva1234', 'siva@bitsathy.ac.in', '40', 'TX36', 'Meeting Hall', 'Others', '2022-10-29', '2022-10-30', '23:05:00', '03:09:00', 'NO', 'NO', '', 0, 'approved', 0),
+(26, 'hari', '1234', 'anujbalu18@gmail.com', '40', 'MECH89', 'CONFERENCE HALL', 'Others', '2022-10-26', '2022-10-28', '07:19:00', '10:21:00', 'NO', 'NO', '', 0, 'approved', 0),
+(27, 'divakarnn', '1234', 'qwnd@gmail.com', '120', 'IB101', 'Meeting Hall', 'Club Event', '2022-10-30', '2022-10-31', '21:53:00', '22:53:00', 'NO', 'NO', '', 0, 'approved', 0),
+(28, 'charan', 'charan12', 'charan.ct21@bitsathy.ac.in', '180', 'CT231', 'CONFERENCE HALL', 'Interview', '2022-11-20', '2022-12-01', '10:03:00', '10:04:00', 'NO', 'NO', '', 0, 'approved', 0),
+(29, 'srikanth', '7376212CT171', 'srikanth.ct21@bitsathy.ac.in', '30', 'ct209', 'SEMINAR HALL', 'Conference', '2022-11-16', '2022-11-30', '22:56:00', '04:56:00', 'NO', 'NO', '', 0, 'approved', 0),
+(30, 'ANUJ B', '7376212CT103', 'anuj.ct21@bitsathy.ac.in', '40', 'mech111', 'CONFERENCE HALL', 'Mentor Meeting', '2022-11-24', '2022-11-30', '14:11:00', '22:11:00', 'NO', 'NO', '', 0, 'approved', 0),
+(31, 'arun', 'arun1234', 'sabxnd@gmail.comnsmn', '120', 'ct209', 'CONFERENCE HALL', 'Interview', '2023-01-23', '2023-01-27', '21:58:00', '23:59:00', 'YES', 'YES', '6', 4, 'approved', 0),
+(32, 'king', 'king1234', 'king@gmail.com', '1800', 'BIT AUDITOTIUM', 'CONFERENCE HALL', 'School Training', '2023-01-24', '2023-01-31', '01:02:00', '16:02:00', 'YES', 'NO', '', 0, 'approved', 0),
+(33, 'manoj', 'manoj122', 'manoj@gmail.com', '300', 'BIT AUDITOTIUM', 'AUDITOTIUM', 'Seminar', '2023-01-01', '2023-01-21', '19:14:00', '23:19:00', 'NO', 'NO', '', 0, 'approved', 0),
+(34, 'srikanth', '7376212CT171', 'srikanth.ct21@bitsathy.ac.in', '40', 'TX36', 'SEMINAR HALL', 'Interview', '2023-02-01', '2023-02-09', '07:06:00', '07:06:00', 'NO', 'NO', '', 0, 'approved', 0),
+(35, 'ANUJ B', '7376212CT103', 'anuj.ct21@bitsathy.ac.in', '15', 'TX36', 'Meeting Hall', 'School Training', '2023-02-01', '2023-02-06', '01:10:00', '10:13:00', 'NO', 'NO', '', 0, 'approved', 0),
+(36, 'anuj', 'anuj', 'anuj.ct21@bitsathy.ac.in', '13', 'ct209', 'SEMINAR HALL', 'Club Event', '2023-02-10', '2023-02-18', '15:09:00', '15:09:00', 'NO', 'NO', '', 0, 'approved', 0),
+(37, 'hari', 'siva1234', 'srikanth.ct21@bitsathy.ac.in', '15', NULL, 'DISCUSSION ROOM', 'School Training', '2023-02-28', '2023-03-01', '15:11:00', '15:11:00', 'NO', 'NO', '', 0, 'pending', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `latest_announcements`
+--
+
+DROP TABLE IF EXISTS `latest_announcements`;
+CREATE TABLE IF NOT EXISTS `latest_announcements` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `announcements` longtext,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `latest_announcements`
+--
+
+INSERT INTO `latest_announcements` (`id`, `announcements`) VALUES
+(1, 'Every Staff Have an meeting in CoE Office');
 
 -- --------------------------------------------------------
 
@@ -297,21 +406,26 @@ CREATE TABLE IF NOT EXISTS `leave` (
   `exam` varchar(45) DEFAULT NULL,
   `mail` varchar(45) DEFAULT NULL,
   `alt_mail` varchar(100) DEFAULT NULL,
-  `reaosn` varchar(45) DEFAULT NULL,
+  `reason` longtext,
   `date_time` varchar(100) DEFAULT NULL,
   `alt_staff` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT 'INITIATED',
   `state` varchar(45) DEFAULT NULL,
+  `leavecol` varchar(45) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `leave`
 --
 
-INSERT INTO `leave` (`id`, `name`, `leave_type`, `batch`, `exam`, `mail`, `alt_mail`, `reaosn`, `date_time`, `alt_staff`, `status`, `state`) VALUES
-(1, 'test', 'test', 'test', 'test', 'gokulk@bitsathy.ac.in', 'test', 'test', '2023-03-30 / 09:30 - 11:00', 'test', 'REJECTED', 'test');
+INSERT INTO `leave` (`id`, `name`, `leave_type`, `batch`, `exam`, `mail`, `alt_mail`, `reason`, `date_time`, `alt_staff`, `status`, `state`, `leavecol`) VALUES
+(4, 'Mr Gokul K', 'Leave', '2021', 'PT - 1', 'gokulk@bitsathy.ac.in', 'ananthip@bitsathy.ac.in', 'Fever', '2023-03-31 / 09:30 - 11:00', 'Mrs Ananthi P', 'ACCEPTED', '0', '1'),
+(3, 'Mr Gokul K', 'Mutual Interchange', '2021', 'PT - 1', 'gokulk@bitsathy.ac.in', 'ananthip@bitsathy.ac.in', 'Fever', '2023-03-31 / 09:30 - 11:00', 'Mrs Ananthi P', 'REJECTED', '0', '1'),
+(2, 'Mr Gokul K', 'Mutual Interchange', '2021', 'PT - 1', 'gokulk@bitsathy.ac.in', 'ananthip@bitsathy.ac.in', 'Fever', '2023-03-31 / 09:30 - 11:00', 'Mrs Ananthi P', 'ACCEPTED', '0', '1'),
+(1, 'Mr Gokul K', 'Mutual Interchange', '2021', 'PT - 1', 'gokulk@bitsathy.ac.in', 'ananthip@bitsathy.ac.in', 'Fever', '2023-03-31 / 09:30 - 11:00', 'Mrs Ananthi P', 'ACCEPTED', '0', '1'),
+(5, 'Mr Gokul K', 'Leave', '2021', 'PT - 1', 'gokulk@bitsathy.ac.in', 'ananthip@bitsathy.ac.in', 'Fever', '2023-03-31 / 09:30 - 11:00', 'Mrs Ananthi P', 'INITIATED', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -351,26 +465,40 @@ CREATE TABLE IF NOT EXISTS `staff` (
   `bio_time` time DEFAULT NULL,
   `mail_date` date DEFAULT NULL,
   `bio_out` time DEFAULT NULL,
+  `venue` varchar(100) DEFAULT NULL,
+  `mail_status` varchar(45) DEFAULT 'NOT MAILED',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `staff`
 --
 
-INSERT INTO `staff` (`id`, `batch`, `exam_name`, `date_time`, `staff`, `email`, `status`, `bio_time`, `mail_date`, `bio_out`) VALUES
-(1, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.BHARATHI A', 'bharathia@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00'),
-(2, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.BHARANI KUMAR R', 'BHARANIKUMARR@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00'),
-(3, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.SADASIVAM K', 'SADASIVAMK@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00'),
-(4, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.SENTHIL KUMAR', 'SENTHILKUMARKL@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00'),
-(5, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.POONGODI C', 'POONGODIC@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00'),
-(6, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.RAVI KUMAR M', 'RAVIKUMARM@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00'),
-(7, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.SENTHILKUMAR G', 'SENTHILKUMARG@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00'),
-(8, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.SASIKUMAR C', 'sasikumarc@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00'),
-(9, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Mr.GOKUL K', 'gokulk@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00'),
-(10, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-31 / 09:30 - 11:00', 'Mr.GOKUL K', 'gokulk@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-30', '11:00:00'),
-(11, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-29 / 09:30 - 11:00', 'Mr.GOKUL K', 'gokulk@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-28', '11:00:00');
+INSERT INTO `staff` (`id`, `batch`, `exam_name`, `date_time`, `staff`, `email`, `status`, `bio_time`, `mail_date`, `bio_out`, `venue`, `mail_status`) VALUES
+(1, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.BHARATHI A', 'bharathia@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(2, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.BHARANI KUMAR R', 'BHARANIKUMARR@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(3, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.SADASIVAM K', 'SADASIVAMK@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(4, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.SENTHIL KUMAR', 'SENTHILKUMARKL@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(5, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.POONGODI C', 'POONGODIC@BITSATHY.AC.IN', 'ENDED', '09:15:00', '2023-02-15', '11:00:00', NULL, 'MAILED - REMAINDER'),
+(6, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.RAVI KUMAR M', 'RAVIKUMARM@bitsathy.ac.in', 'ENDED', '09:15:00', '2023-02-15', '11:00:00', NULL, 'MAILED - REMAINDER'),
+(7, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.SENTHILKUMAR G', 'SENTHILKUMARG@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(8, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Dr.SASIKUMAR C', 'sasikumarc@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(9, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-30 / 09:30 - 11:00', 'Mr.GOKUL K', 'gokulk@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(10, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-31 / 09:30 - 11:00', 'Mr.GOKUL K', 'gokulk@bitsathy.ac.in', 'ENDED', '09:15:00', '2023-02-15', '11:00:00', NULL, 'MAILED - REMAINDER'),
+(11, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-29 / 09:30 - 11:00', 'Mr.GOKUL K', 'gokulk@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-28', '11:00:00', NULL, 'NOT MAILED'),
+(12, 'UG 2nd Year Even Semester', 'PT - 1', '2023-04-01 / 14:45 - 15:15', 'Dr.BHARATHI A', 'bharathia@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(13, 'UG 2nd Year Even Semester', 'PT - 1', '2023-04-01 / 14:45 - 15:15', 'Dr.BHARANI KUMAR R', 'BHARANIKUMARR@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(14, 'UG 2nd Year Even Semester', 'PT - 1', '2023-04-01 / 14:45 - 15:15', 'Dr.SADASIVAM K', 'SADASIVAMK@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(15, 'UG 2nd Year Even Semester', 'PT - 1', '2023-04-01 / 14:45 - 15:15', 'Dr.SENTHIL KUMAR', 'SENTHILKUMARKL@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(16, 'UG 2nd Year Even Semester', 'PT - 1', '2023-04-01 / 14:45 - 15:15', 'Dr.POONGODI C', 'POONGODIC@BITSATHY.AC.IN', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(17, 'UG 2nd Year Even Semester', 'PT - 1', '2023-04-01 / 14:45 - 15:15', 'Dr.RAVI KUMAR M', 'RAVIKUMARM@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(18, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-31 / 14:45 - 15:15', 'Dr.GUNASEKARAN M', 'GUNASEKARANM.LB@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(19, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-31 / 14:45 - 15:15', 'Dr.JEYARAMAN R', 'JEYARAMANR@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(20, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-31 / 14:45 - 15:15', 'Mr.PRABHU P S', 'PRABHUPS@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(21, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-31 / 14:45 - 15:15', 'Dr.KODIESWARI A', 'kodieswaria@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(22, 'UG 2nd Year Even Semester', 'PT - 1', '2023-03-31 / 14:45 - 15:15', 'Mr.RANGANATHAN A', 'RANGANATHANA@bitsathy.ac.in', 'UPCOMING', '09:15:00', '2023-03-29', '11:00:00', NULL, 'NOT MAILED'),
+(23, '', '', '', 'Mrs Ananthi P', '', 'UPCOMING', NULL, NULL, NULL, NULL, 'NOT MAILED');
 
 -- --------------------------------------------------------
 
@@ -386,7 +514,14 @@ CREATE TABLE IF NOT EXISTS `staff_todo` (
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `staff_todo`
+--
+
+INSERT INTO `staff_todo` (`id`, `staff_mail`, `description`, `created_at`) VALUES
+(32, 'gokulk@bitsathy.ac.in', 'Check automatic mails system', '2023-02-15 09:32:11');
 
 -- --------------------------------------------------------
 
@@ -402,7 +537,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users`
@@ -410,7 +545,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `created_at`) VALUES
 (1, 'ternos', '$2y$10$LvhZ5PeI1PHdZGFJdfxUBeManXBPbcXWWKuCrt5YgqhkPCalNPdzm', '2022-10-18 14:21:51'),
-(2, 'gokulk@bitsathy.ac.in', '$2y$10$2YEw9xCN84raBYZtmsaxoOZOiZbz6Nc1j8t3gtz2LweXxqbpxFIhm', '2023-02-10 19:48:08');
+(2, 'gokulk@bitsathy.ac.in', '$2y$10$2YEw9xCN84raBYZtmsaxoOZOiZbz6Nc1j8t3gtz2LweXxqbpxFIhm', '2023-02-10 19:48:08'),
+(3, 'ananthip@bitsathy.ac.in', '$2y$10$JbOvgKw6M9RkFBdEVdhjwuEL7JUR.2Wj/P0THjvFqc2tmcV7pJLr.', '2023-02-14 22:43:42');
 
 -- --------------------------------------------------------
 
@@ -962,6 +1098,35 @@ INSERT INTO `user_data` (`Roll_No`, `Year`, `student_official_email_id`, `column
 ('11007', 'Mr.SARATHKUMAR S R', 'SARATHKUMARSR@bitsathy.ac.in', ''),
 ('11008', 'Mr.ABHINANDH K A', 'ABHIJOB234@GMAIL.COM', ''),
 ('41012', 'Dr.SARASWATHI C', 'SARASWATHIC@BITSATHY.AC.IN', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `venue`
+--
+
+DROP TABLE IF EXISTS `venue`;
+CREATE TABLE IF NOT EXISTS `venue` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `proposal` varchar(100) DEFAULT NULL,
+  `f_time` time DEFAULT NULL,
+  `t_time` time DEFAULT NULL,
+  `f_date` date DEFAULT NULL,
+  `t_date` date DEFAULT NULL,
+  `allocated_room_name` varchar(100) DEFAULT NULL,
+  `capacity` varchar(45) DEFAULT NULL,
+  `staff` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `venue`
+--
+
+INSERT INTO `venue` (`id`, `proposal`, `f_time`, `t_time`, `f_date`, `t_date`, `allocated_room_name`, `capacity`, `staff`) VALUES
+(1, 'coe', '22:29:00', '22:30:00', '2023-02-12', '2023-02-16', 'ME206', '120', '2'),
+(2, 'coe', '22:29:00', '22:30:00', '2023-02-12', '2023-02-16', 'EC23', '60', '1');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
