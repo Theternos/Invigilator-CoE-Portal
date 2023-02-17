@@ -162,48 +162,9 @@ error_reporting(0);
             </section>
         </section>
         <section class="history_leave">
-            <h2 class="leave_history_h2">Leave Summary</h2>
+            <h2 class="leave_history_h2">Register Exam Halls</h2>
 
-            <?php
-            $sql = "SELECT * FROM invigilation.`leave` where mail = '$username' ORDER BY id DESC";
-            $result = mysqli_query($link, $sql);
-            $temp = 1;
-            if (mysqli_num_rows($result) > 0) { ?>
-                <table>
 
-                    <tbody>
-                        <?php
-                        while ($row = mysqli_fetch_assoc($result)) {
-                        ?>
-                            <tr>
-                                <td class="table_sno"><?php echo $temp ?></td>
-                                <td><?php echo $row['leave_type'] ?></td>
-                                <td><?php echo $row['alt_staff'] ?></td>
-                                <td><?php echo $row['date_time'] ?></td>
-                                <td><?php echo $row['reason'] ?></td>
-                                <td><?php echo $row['status'] ?></td>
-                                <td>
-                                    <?php
-                                    if ($row['status'] == 'INITIATED') {
-                                    ?>
-                                        <form action="cancel.php" method="POST">
-                                            <input type="hidden" name='alt_mail' value='<?php echo $row['alt_mail'] ?>'>
-                                            <input type="hidden" name='date_time' value='<?php echo $row['date_time'] ?>'>
-                                            <button class="leave_cancel" name="cancel" onclick="return confirm('Are you sure you want to Cancel?')">Cancel</button>
-                                        </form>
-                                    <?php } ?>
-                                </td>
-                            </tr>
-                        <?php
-                            $temp = $temp + 1;
-                        }
-                    } else { ?>
-                        <p style="text-align: center; letter-spacing:2px; margin-top:70%;">No Leave Record Found!</p>
-                    <?php  }
-                    ?>
-                    </tbody>
-                    </thead>
-                </table>
         </section>
     </section>
 </body>

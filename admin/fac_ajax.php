@@ -37,18 +37,29 @@ if (isset($_POST['year'])) {
     while ($i < $row[$max]) {
         $i = $i + 1;
         echo "<h5 class = 'exam_deeet'>Exam $i Details</h5>"; ?>
+        <style>
+            span {
+                color: red;
+            }
+        </style>
         <div class="time">
-            <?php
-            echo "<label class='exam_reg_label1'>Date : </label>";
-            echo "<input class='exam_reg_select1' name='date$i' type='date'>";
-            echo "<label class='exam_reg_label1'>From Time : </label>";
-            echo "<input class='exam_reg_select1' name = 'ftime$i'type='time'>";
-            echo "<label class='exam_reg_label1'>To Time : </label>";
-            echo "<input class='exam_reg_select1' name = 'ttime$i'type='time'>"; ?>
+            <label class='exam_reg_label1'>Date : <span>*</span></label>
+            <input class='exam_reg_select1' name='date$i' type='date'>
+            <label class='exam_reg_label1'>Session : <span>*</span></label>
+            <select class='exam_reg_select1' name='session'>
+                <option value="Not Selected">--SELECT--</option>
+                <option value="FN">Forenoon</option>
+                <option value="AN">Afternoon</option>
+            </select>
+            <label class='exam_reg_label1'>From Time : </label>
+            <input class='exam_reg_select1' name='ftime$i' type='time'>
+            <label class='exam_reg_label1'>To Time : </label>
+            <input class='exam_reg_select1' name='ttime$i' type='time'>
         </div>
         <?php
     }
 }
+
 if (isset($_POST['date_insert'])) {
     $name = $_POST['year'];
     $semester = $_POST['semester'];

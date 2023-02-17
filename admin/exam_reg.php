@@ -82,6 +82,7 @@ $username = $_SESSION["username"];
                         <option value="PT - 2">PT - 2</option>
                         <option value="O = PT">O - PT</option>
                         <option value="Semester">Semester</option>
+                        <option value="Arrear Exam">Arrear Exam</option>
                     </select>
                 </div>
             </div>
