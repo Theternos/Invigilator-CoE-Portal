@@ -14,7 +14,6 @@ $username = $_SESSION["username"];
 date_default_timezone_set('Asia/Kolkata');
 $date = date('m/d/Y h:i a', time());
 $calender_date = date('m/d/Y', time());
-include 'calender.php';
 
 
 ?>
@@ -96,10 +95,35 @@ include 'calender.php';
                 <h5>VISUALIZE THE INVIGILATORS ACTIVITY</h5>
                 <div id="chartContainer" style="height: 320px; width: 100%;"></div>
                 <?php
+                $today = date("Y-m-d");
+                $staff_sql = "SELECT COUNT(id) as staff_count FROM staff WHERE date_time LIKE '%$today%'";
+                #echo $staff_sql;
+                $staff_result = mysqli_query($link, $staff_sql);
+                $staff_row = mysqli_fetch_assoc($staff_result);
+                $biometric_sql = "SELECT COUNT(id) as bio_count FROM biometric WHERE exam_date = '$today'";
+                #echo $biometric_sql;
+                $biometric_result = mysqli_query($link, $biometric_sql);
+                $biometric_row = mysqli_fetch_assoc($biometric_result);
+                #echo $biometric_row['bio_count'];
+                #echo $staff_row['staff_count'];
+                $not_reported = $staff_row['staff_count'] - $biometric_row['bio_count'];
+
+                $biometric_reported_sql = "SELECT * FROM invigilation.biometric WHERE exam_date LIKE '%$today%'";
+                $biometric_reported_result = mysqli_query($link, $biometric_reported_sql);
+                $staff_reported_sql = "SELECT * from invigilation.staff WHERE `status` = 'ONGOING' and date_time LIKE '%$today%'";
+                #echo $staff_reported_sql;
+                $staff_reported_result = mysqli_query($link, $staff_reported_sql);
+                $late_reported_count = 0;
+                while ($staff_reported_row = mysqli_fetch_assoc($staff_reported_result) and $biometric_reported_row = mysqli_fetch_assoc($biometric_reported_result)) {
+                    if ($biometric_reported_row['in_time'] < $staff_reported_row['bio_time']) {
+                        $late_reported_count = $late_reported_count + 1;
+                    }
+                }
+
                 $dataPoints = array(
-                    array("y" => 27, "label" => "Submitted"),
-                    array("y" => 70, "label" => "Collected"),
-                    array("y" => 3, "label" => "Late Collected"),
+                    array("y" => $not_reported, "label" => "Not Reported"),
+                    array("y" => $biometric_row['bio_count'], "label" => "Reported"),
+                    array("y" => $late_reported_count, "label" => "Late Reported"),
                 );
                 ?>
             </div>
@@ -118,18 +142,10 @@ include 'calender.php';
                         $json = file_get_contents($jsonurl);
                         $weather = json_decode($json);
                         $kelvin = $weather->main->temp;
-                        $greeting_time = date('H:i', time());
-                        $sql = "SELECT * FROM user_data WHERE student_official_email_id = '$username'";
-                        $result = mysqli_query($link, $sql);
-                        $row = mysqli_fetch_assoc($result);
+                        $greeting_time = date('H:i', time()); ?>
 
-                        if ($greeting_time <= '05:45' and $greeting_time >= '00:00') { ?>
-                            <img src="../asset/moon.png" alt="Weather Image" width="110px">
-                        <?php  } elseif ($greeting_time <= '23:59' and $greeting_time >= '19:00') { ?>
-                            <img src="../asset/moon.png" alt="Weather Image" width="110px">
-                        <?php } else { ?>
-                            <img src="../assets/cloudy.png" alt="Weather Image" width="110px">
-                        <?php } ?>
+
+                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.whattoexpect.com%2Ffirst-year%2Fmonth-by-month%2Fweek-1.aspx&psig=AOvVaw1xiehW4nBSkp0j-OBixWwO&ust=1676738146381000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCKC9lMn-nP0CFQAAAAAdAAAAABAE" alt="Weather Image" width="110px">
                         <p><span style="font-size: 22px;"><?php echo $kelvin ?>°C</span></p>
                         <h4 style="letter-spacing: 1px;font-size: 13px;">
                             <?php
@@ -168,11 +184,12 @@ include 'calender.php';
                             "Reflect on accomplishments, set goals and make a to-do list for tomorrow's success."
                         );
 
-                        // get today's date
-                        $today = date("j");
+                        $today = date("j"); // get today's date
                         ?>
 
-                        <p><?php echo $tips[$today % 9] ?></p>
+                        <p><?php echo $tips[$today % 9];
+                            $today = date("Y-m-d");
+                            ?></p>
                     </div>
                 </div>
 
@@ -187,10 +204,34 @@ include 'calender.php';
                 </div>
                 <div class="biometric_updates">
                     <div class="admin_other_main">
-                        <h5>hey</h5>
+                        <h5>LATE REPORTERS</h5>
+                        <?php
+                        $biometric_reported_sql = "SELECT * FROM invigilation.biometric WHERE exam_date LIKE '%$today%'";
+                        $biometric_reported_result = mysqli_query($link, $biometric_reported_sql);
+                        $staff_reported_sql = "SELECT * from invigilation.staff WHERE `status` = 'ONGOING' and date_time LIKE '%$today%'";
+                        #echo $staff_reported_sql;
+                        $staff_reported_result = mysqli_query($link, $staff_reported_sql);
+                        $late_reported_count = 0;
+                        while ($staff_reported_row = mysqli_fetch_assoc($staff_reported_result) and $biometric_reported_row = mysqli_fetch_assoc($biometric_reported_result)) {
+                            if ($biometric_reported_row['in_time'] < $staff_reported_row['bio_time']) { ?>
+                                <p style="margin-left: 10px;"><?php echo $staff_reported_row['staff']; ?></p>
+                        <?php
+                                $late_reported_count = $late_reported_count + 1;
+                            }
+                        }
+
+                        ?>
                     </div>
                     <div class="admin_other_main">
-                        <h5>hey</h5>
+                        <h5>NOT REPORTED</h5>
+                        <?php
+                        $today = date("Y-m-d");
+                        $biometric_reported_sql = "SELECT * from invigilation.staff WHERE `status` = 'UPCOMING' and date_time LIKE '%$today%'";
+                        $biometric_reported_result = mysqli_query($link, $biometric_reported_sql);
+                        while ($biometric_reported_row = mysqli_fetch_assoc($biometric_reported_result)) { ?>
+                            <p style="margin-left: 10px;"><?php echo $biometric_reported_row['staff']; ?></p>
+                        <?php        }
+                        ?>
                     </div>
                 </div>
             </div>

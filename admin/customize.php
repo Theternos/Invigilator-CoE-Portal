@@ -24,7 +24,67 @@ error_reporting(0);
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- JS & CSS library of MultiSelect plugin -->
+    <script src="https://phpcoder.tech/multiselect/js/jquery.multiselect.js"></script>
+
 </head>
+
+<style>
+    .multi-select {
+        position: relative;
+        display: inline-block;
+    }
+
+    .popup {
+        position: absolute;
+
+        z-index: 1000;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        display: none;
+    }
+
+    .search-box {
+        display: block;
+        width: 100%;
+        padding: 6px;
+        margin-bottom: 6px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .options {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .options label {
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    .selected-options {
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        z-index: 1000;
+        width: 100%;
+        padding: 6px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+    }
+
+    .selected-count {
+        font-size: 14px;
+        color: #333;
+    }
+</style>
 
 <body>
     <div class="primary-nav">
@@ -37,17 +97,17 @@ error_reporting(0);
             <a href="#" class="logotype" style="left:39px;top:8px;">Invgltr<span> Portal</span></a>
             <div class="overflow-container">
                 <ul style="margin-top:1vh; " class="menu-dropdown">
-                    <li><a href="index.php">Dashboard</a><span class="icon"><i class="fa fa-dashboard"></i></span></li>
-                    <li><a href="#">Leave Apply</a><span class="icon"><i class="fa fa-renren"></i></span></li>
-                    <li><a href="./report.php">Malpractice</a><span class="icon"><i class="fa fa-stumbleupon"></i></span></li>
-                    <li><a href="#">Faculty</a><span class="icon"><i class="fa fa-user"></i></span></li>
+                    <li><a href="./index.php">Dashboard</a><span class="icon"><i class="fa fa-dashboard"></i></span></li>
+                    <li><a href="./faculty.php">Faculty / Exam</a><span class="icon"><i class="fa fa-renren"></i></span></li>
+                    <li><a href="./leave_approve.php">Leave Approve</a><span class="icon"><i class="fa fa-stumbleupon"></i></span></li>
+                    <li><a href="#">Customize</a><span class="icon"><i class="fa fa-user"></i></span></li>
                     <li style="position:absolute;bottom: 0;"><a href="./logout.php">Logout</a><span class="icon"><i style="margin-left: 11.5vw; color:#fff;" class="fa fa-sign-out"></i></span></li>
                 </ul>
         </nav>
     </div>
     <section class="leave_history">
         <section>
-            <section class="flex-row">
+            <section class="flex-row" style="width:65vw;">
                 <section class='duty_allotment'>
                     <h3>Duty - Allotment</h3>
                     <div id="duty_allotment">
@@ -119,56 +179,221 @@ error_reporting(0);
                     ?>
                 </section>
             </section>
-            <section class="leave_graph">
-                <h3>Visualize your activity</h3>
-                <?php
-                $sql = "SELECT COUNT(id) as COUNT FROM `leave` WHERE mail = '$username' and `status` = 'APPROVED' and `leave_type` = 'Leave'";
-                $result = mysqli_query($link, $sql);
-                if ($result->num_rows > 0) {
-                    $leave_accepted_leave_row = mysqli_fetch_assoc($result);
-                } else {
-                    $leave_accepted_leave_row['COUNT'] = 0;
-                }
-                $sql = "SELECT COUNT(id) as COUNT FROM `leave` WHERE mail = '$username' and `status` = 'APPROVED' and `leave_type` = 'Mutual Interchange'";
-                $result = mysqli_query($link, $sql);
-                if ($result->num_rows > 0) {
-                    $leave_accepted_mutual_row = mysqli_fetch_assoc($result);
-                } else {
-                    $leave_accepted_mutual_row['COUNT'] = 0;
-                }
-                $sql = "SELECT COUNT(id) as COUNT FROM `leave` WHERE mail = '$username' and `status` = 'REJECTED' and `leave_type` = 'Leave'";
-                $result = mysqli_query($link, $sql);
-                if ($result->num_rows > 0) {
-                    $leave_rejected_leave_row = mysqli_fetch_assoc($result);
-                } else {
-                    $leave_rejected_leave_row['COUNT'] = 0;
-                }
-                $sql = "SELECT COUNT(id) as COUNT FROM `leave` WHERE mail = '$username' and `status` = 'REJECTED' and `leave_type` = 'Mutual Interchange'";
-                $result = mysqli_query($link, $sql);
-                if ($result->num_rows > 0) {
-                    $leave_rejected_mutual_row = mysqli_fetch_assoc($result);
-                } else {
-                    $leave_rejected_mutual_row['COUNT'] = 0;
-                }
-                $dataPoints = array(
-                    array("y" => $leave_rejected_leave_row['COUNT'], "label" => "Leave (Rejected)"),
-                    array("y" => $leave_rejected_mutual_row['COUNT'], "label" => "Mutual Interchange (Rejected)"),
-                    array("y" => $leave_accepted_leave_row['COUNT'], "label" => "Leave (Approved)"),
-                    array("y" => $leave_accepted_mutual_row['COUNT'], "label" => "Mutual Interchange (Approved)"),
-                );
+            <section class="flex-row">
+                <section class="existing_remainder">
+                    <h5>Additional Schedule</h5>
+                    <?php
+                    $sql = "SELECT * FROM schedule_mail";
+                    $result = mysqli_query($link, $sql);
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) { ?>
+                            <div class="added_schedule">
+                                <p style="margin-left:20px; margin-top:2px;">Duty : <?php echo $row['date_time']; ?></p>
+                                <p style="margin-left:20px;">Schedule Time : <?php echo $row['date']; ?>&nbsp;
+                                    <?php echo $row['time']; ?></p>
+                            </div>
 
-                ?>
-                <div id="chartContainer" style="height: 90%; width: 100%;"></div>
+                    <?php    }
+                    } ?>
+                </section>
+                <section class="schedule_remainder">
+                    <h3 style="margin-bottom: 15px;">Schedule the Reminder</h3>
+                    <?php
+                    $sql = "SELECT DISTINCT date_time FROM staff WHERE `status` = 'UPCOMING'";
+                    $result = mysqli_query($link, $sql);
+                    if (mysqli_num_rows($result) > 0) { ?>
+                        <form action="fac_ajax.php" method="POST">
+                            <label for="">Select Duty: </label>
+                            <select name="date_time_select" id="date_time_select">
+                                <option value="Not Selected"> -- SELECT -- </option>
+                                <?php
+                                $today = date("Y-m-d");
+                                while ($row = mysqli_fetch_assoc($result)) { ?>
+                                    <option value="<?php echo $row['date_time'] ?>"><?php echo $row['date_time'] ?></option>
+                                <?php    } ?>
+                            </select><br />
+                            <label for="">Select Date: </label>
+                            <?php
+                            $selected_date = $_POST['selected_date'];
+                            $sql = "SELECT * FROM exam_details WHERE date_time = '$selected_date'";
+                            $result = mysqli_query($link, $sql);
+                            $row = mysqli_fetch_assoc($result);
+                            $exam_date = $row['date'];
+                            echo $exam_date;
+                            ?>
+                            <input name="date_of_scheduling" type="date" min="<?php echo $today ?>" max="<?php echo $exam_date ?>"><br />
+                            <label for="">Select Time: </label>
+                            <input name="time_of_scheduling" type="time"><br />
+                            <button type="submit" name="set_schedule">Set Schedule</button>
+                        </form>
+                    <?php  }
+                    ?>
+                </section>
             </section>
+
         </section>
         <section class="history_leave">
             <h2 class="leave_history_h2">Register Exam Halls</h2>
+            <br /><br />
+            <label for="">Total Classes Needed</label>
+            <input type="number" id="input-field">
+            <button id="submit-button">Submit</button>
+            <label class='exam_reg_label1'>Select Class Rooms : <span>*</span></label>
+            <button id="show-popup">Search</button>
 
+            <form>
+
+
+                <div class="multi-select">
+                    <div id="popup" class="popup">
+                        <input type="text" class="search-box" placeholder="Search...">
+                        <div class="options">
+                            <?php
+                            $sql = "SELECT * FROM classroom_details";
+                            $result = mysqli_query($link, $sql);
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                                    <label style="width:200px;"><input type="checkbox" value="value='<?php echo $row['Classroom_No'] ?>'"><?php echo $row['Classroom_No'] ?></label>
+                            <?php }
+                            }
+                            ?>
+                        </div>
+                        <div class="selected-options">
+                            <span class="selected-count">0 selected</span>
+                        </div>
+                        <button id="close-popup">Close</button>
+                    </div>
+                </div>
+                <br /><br />
+                <label for="">From Date</label>
+                <input type="date"><br /><br />
+                <label for="">To Date</label>
+                <input type="date"><br /><br />
+                <label for="">Session</label>
+                <select name="" id="">
+                    <option value="">SELECT</option>
+                    <option value="">FN</option>
+                    <option value="">AN</option>
+                </select><br /><br />
+                <button>Submit</button>
+                </select>
+            </form>
 
         </section>
     </section>
+    <?php
+    $count = 5
+    ?>
 </body>
-<script src="./js/script.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#date_time_select').change(function() {
+            var selectedOption = $(this).val();
+            $.ajax({
+                url: 'fac_ajax.php',
+                type: 'POST',
+                data: {
+                    option: selectedOption
+                },
+                success: function(data) {
+                    $.ajax({
+                        url: 'customize.php',
+                        type: 'POST',
+                        data: {
+                            selected_date: data
+                        },
+                        success: function(result) {
+                            console.log(result);
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+<script>
+    const multiSelect = document.querySelector(".multi-select");
+    const searchBox = multiSelect.querySelector(".search-box");
+    const options = multiSelect.querySelectorAll(".options input[type='checkbox']");
+    const selectedOptions = multiSelect.querySelector(".selected-options");
+    const selectedCount = selectedOptions.querySelector(".selected-count");
+    const showPopupButton = document.querySelector("#show-popup");
+    const closePopupButton = document.querySelector("#close-popup");
+    const popup = document.querySelector("#popup");
+
+    showPopupButton.addEventListener("click", () => {
+        popup.style.display = "block";
+    });
+
+    closePopupButton.addEventListener("click", () => {
+        popup.style.display = "none";
+    });
+
+
+    const maxSelections = "<?php echo $count; ?>";
+    let selected = [];
+
+    function updateSelectedCount() {
+        selectedCount.innerText = selected.length + " selected";
+    }
+
+    function onOptionChange(event) {
+        const option = event.target;
+        if (option.checked) {
+            if (selected.length >= maxSelections) {
+                option.checked = false;
+                return;
+            }
+            selected.push(option.value);
+        } else {
+            selected = selected.filter((value) => value !== option.value);
+        }
+        updateSelectedCount();
+    }
+
+    function onSearchInput() {
+        const query = searchBox.value.toLowerCase();
+        for (const option of options) {
+            const label = option.parentElement.innerText.toLowerCase();
+            if (label.includes(query)) {
+                option.style.display = "";
+            } else {
+                option.style.display = "none";
+            }
+        }
+    }
+
+    for (const option of options) {
+        option.addEventListener("change", onOptionChange);
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var last_valid_selection = null;
+        $('#staff_recruit').change(function(event) {
+            if ($(this).val().length > 3) {
+                $(this).val(last_valid_selection);
+            } else {
+                last_valid_selection = $(this).val();
+            }
+        });
+    });
+    $("select").on('click', 'option', function() {
+        if ($("select option:selected").length > 3) {
+            $(this).removeAttr("selected");
+            // alert('You can select upto 3 options only');
+        }
+    });
+</script>
+<script>
+    jQuery("#staff_recruit").multiselect({
+        columns: 1,
+        placeholder: "Select Classes",
+        search: true,
+    });
+</script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> </script>
 <script>
     function FetchState() {

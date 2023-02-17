@@ -491,6 +491,7 @@
         padding: 20px;
         width: 22vw;
         min-height: 26.2vh;
+        color: #000;
     }
     
     .admin_other_main {
@@ -499,6 +500,7 @@
         margin-left: 3vw;
         background-color: #fff;
         padding: 10px;
+        overflow-y: scroll;
     }
     
     .add-todo input {
@@ -783,16 +785,6 @@
         margin-top: 5vh;
     }
     
-    .leave_graph {
-        background-color: #fff;
-        width: 56vw;
-        height: 29.5vh;
-        border-radius: 6px;
-        margin-left: 6.5vw;
-        padding: 20px;
-        margin-top: 5vh;
-    }
-    
     .leave h3 {
         font-size: 14px;
         color: #d00073;
@@ -803,6 +795,7 @@
         margin-bottom: 15px;
     }
     
+    .schedule_remainder h3,
     .leave_graph h3 {
         font-size: 14px;
         color: #d00073;
@@ -810,6 +803,17 @@
         font-weight: 300;
         text-align: center;
         text-transform: uppercase;
+    }
+    
+    .schedule_remainder {
+        background-color: #fff !important;
+        width: 30vw !important;
+        height: 29.5vh;
+        border-radius: 6px;
+        margin-left: 2 vw;
+        padding: 20px;
+        margin-top: 5vh;
+        box-shadow: 0 0 4px 4px rgba(133, 133, 133, 0.6);
     }
     
     .leave_history_h2 {
@@ -1239,4 +1243,96 @@
         color: #000000;
         font-family: 'Work Sans', sans-serif;
         margin-left: 1vw;
+    }
+    
+    .history_leave select {
+        max-height: 30vh;
+        overflow-y: scroll;
+    }
+    
+    .admin_other_main h5 {
+        font-size: 14px;
+        color: #d00073;
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 300;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        padding: 10px;
+        padding-left: 20px;
+    }
+    
+    .existing_remainder {
+        width: 22vw;
+        height: 32.3vh;
+        background-color: #fff;
+        margin-top: 5vh;
+        margin-left: 6.5vw;
+        margin-right: 2vw;
+        border-radius: 6px;
+        padding: 10px;
+        box-shadow: 0 0 4px 4px rgba(133, 133, 133, 0.6);
+        overflow-y: scroll;
+    }
+    
+    .existing_remainder h5 {
+        font-size: 14px;
+        color: #d00073;
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 300;
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 15px;
+        padding: 10px;
+        padding-left: 20px;
+    }
+    
+    .schedule_remainder label {
+        font-size: 14px;
+        color: #000000;
+        font-family: 'Poppins', sans-serif;
+        margin-left: 2vw;
+        letter-spacing: 1px;
+        margin-top: 10px;
+    }
+    
+    .schedule_remainder select,
+    .schedule_remainder input {
+        font-size: 14px;
+        color: #000000;
+        font-family: 'Poppins', sans-serif;
+        margin-left: 1vw;
+        letter-spacing: 1px;
+        margin-top: 10px;
+    }
+    
+    .schedule_remainder button {
+        min-width: 70px !important;
+        min-height: 30px !important;
+        border: 1px #000;
+        background-color: #000 !important;
+        color: #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        letter-spacing: 1px;
+        margin-left: 12vw;
+        margin-top: 20px;
+    }
+    
+    .schedule_remainder button:hover {
+        background-color: #212121 !important;
+    }
+    
+    .added_schedule {
+        width: 90%;
+        height: 40px;
+        background-color: #f8f8f8;
+        padding: 5px;
+        margin-left: 7px;
+        border-radius: 6px;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #000000;
+        font-family: 'Poppins', sans-serif;
+        letter-spacing: 1px;
+        box-shadow: 0 0 4px 4px rgba(133, 133, 133, 0.137);
     }

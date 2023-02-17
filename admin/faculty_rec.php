@@ -77,7 +77,7 @@ $username = $_SESSION["username"];
             </select>
             <select name="exam__date" id="exam__date" hidden>
             </select><br><br>
-            <label class="recruit_label" for="exam_date">Select Exam & Date: </label><br>
+            <label class="recruit_label" for="exam_date">Choose Number of Classes </label><br>
             <input type="number" style="min-width: 30px; min-height: 20px; margin: left 10vw;" name="classroom_required"><br /><br />
             <button type="submit" name="staff_recruit" onclick="return confirm('Are you sure you want to Submit?')">Submit</button>
         </form>

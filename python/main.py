@@ -167,4 +167,42 @@ for imp in importing:
         online_cursor.execute(b)
         online_db.commit()
         print(mycursor.rowcount, "record(s) affected")
+        
+#For Manually Scheduled Mail   
+mycursor.execute("SELECT * FROM schedule_mail")
+schedule_mail = mycursor.fetchall()
+mycursor.execute("SELECT * FROM staff WHERE `status` = 'UPCOMING'")
+staff_table = mycursor.fetchall()
+for staff_date in staff_table:
+    for date in schedule_mail:
+        if(date[3] == staff_date[3]):
+            now = datetime.now()
+            if(date[2] > now):
+                email = 'allwin.cs21@bitsathy.ac.in'
+                date_time = staff_date[3]
+                timee = staff_date[7]
+                server = smtplib.SMTP('smtp.gmail.com',587)
+                server.starttls()
+                server.login('coebitshack@gmail.com','pulpdyzaqfbtofqb')
+                message = f'''\
+Subject: Gentle remainder for Invigilation Duty!
+
+Respected Staff,
+    
+        A gentle remainder your are been alloted with invigilation duty on {date_time}. Collect the requirements before {timee}. 
+
+
+
+Thanks & Regards,
+Controller of Examination,
+Bannari Amman Institute of Technology
+Sathyamangalam-638 401
+Erode District, Tamilnadu
+Ph: 04295-226122, 226123
+        '''.format(date_time, timee)
+                server.sendmail('coebitshack@gmail.com',email,message)
+                print('Mailed')
+                a = "DELETE FROM schedule_mail WHERE date_time = '%s'" % date_time
+                mycursor.execute(a)
+                
 time.sleep(60)

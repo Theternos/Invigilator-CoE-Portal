@@ -256,4 +256,39 @@ if (isset($_POST['staff_recruit'])) {
     $result = mysqli_query($link, $sql);
     header('location: ./faculty.php');
 }
+if (isset($_POST['set_schedule'])) {
+    $date_time = $_POST['date_time_select'];
+    $date = $_POST['date_of_scheduling'];
+    $time = $_POST['time_of_scheduling'];
+    $sql = "INSERT INTO schedule_mail (`date`, `time`, `date_time`) VALUES ('$date', '$time', '$date_time')";
+    echo $sql;
+    $result = mysqli_query($link, $sql);
+    header('location: ./customize.php');
+}
+
+function getDataFromOption($option)
+{
+    // do some processing based on the selected option
+    // and return the data as a result
+    switch ($option) {
+        case 'value1':
+            $data = 'Data for value 1';
+            break;
+        case 'value2':
+            $data = 'Data for value 2';
+            break;
+        case 'value3':
+            $data = 'Data for value 3';
+            break;
+        default:
+            $data = 'No data found';
+            break;
+    }
+    return $data;
+}
+$option = $_POST['option'];
+// Retrieve the data according to the selected option and assign it to $data variable
+$data = getDataFromOption($option);
+echo $data;
+
 ?>
