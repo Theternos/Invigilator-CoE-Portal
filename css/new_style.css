@@ -494,7 +494,7 @@
     }
     
     .admin_other_main {
-        width: 35vw;
+        width: 15.25vw;
         border-radius: 6px;
         margin-left: 3vw;
         background-color: #fff;
@@ -517,6 +517,11 @@
         border: 1px solid;
         font-size: 14px;
         border-image: linear-gradient(to right, #ccc, #ffffff) 0 0 1 0%;
+    }
+    
+    .biometric_updates {
+        display: flex;
+        flex-direction: row;
     }
     
     .done button {
@@ -766,6 +771,16 @@
         padding: 20px;
         padding-left: 10%;
         padding-right: 10%;
+    }
+    
+    .leave_graph {
+        background-color: #fff;
+        width: 56vw;
+        height: 29.5vh;
+        border-radius: 6px;
+        margin-left: 6.5vw;
+        padding: 20px;
+        margin-top: 5vh;
     }
     
     .leave_graph {
@@ -1095,4 +1110,133 @@
         border-radius: 5px;
         margin-top: 7px;
         margin-left: 38%;
+    }
+    
+    .left_main_box {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .leave_approve_graph {
+        background-color: #fff !important;
+        height: 30vh !important;
+        width: 60vw !important;
+        border-radius: 6px;
+        padding: 10px;
+    }
+    
+    .over_all_main {
+        display: flex;
+        flex-direction: row;
+        margin-left: 6vw;
+        padding-top: 8vh;
+    }
+    
+    .leave_approve_portal {
+        background-color: #fff !important;
+        height: 45vh !important;
+        width: 60vw !important;
+        border-radius: 6px;
+        padding: 10px;
+        margin-bottom: 5vh;
+    }
+    
+    .leave_summary {
+        width: 25vw;
+        min-height: 80vh;
+        background-color: #fff;
+        margin-left: 5vw;
+        border-radius: 6px;
+        padding: 10px;
+    }
+    
+    .leave_history h5 {
+        color: #d00073;
+        font-family: 'Work Sans', sans-serif;
+    }
+    
+    .duty_allotment {
+        background-color: #fff;
+        width: 22vw !important;
+        height: 45vh;
+        border-radius: 6px;
+        margin-left: 6.5vw !important;
+        padding: 20px;
+        padding-left: 10%;
+        padding-right: 10%;
+        box-shadow: 0 0 4px 4px rgba(133, 133, 133, 0.6);
+    }
+    
+    .duty_allotment h3 {
+        font-size: 14px;
+        color: #d00073;
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 300;
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+    }
+    
+    .duty_allotment button {
+        min-width: 70px !important;
+        min-height: 30px !important;
+        border: 1px #000;
+        background-color: #000 !important;
+        color: #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        letter-spacing: 1px;
+        margin: auto;
+    }
+    
+    .duty_allotment button:hover {
+        background-color: #212121 !important;
+    }
+    
+    .duty_allotment input {
+        width: 50px;
+        height: 22px;
+        margin-left: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc !important;
+    }
+    
+    .duty_allotment form {
+        padding-top: 20px;
+    }
+    
+    .existing_limit {
+        width: 21vw;
+        height: 50.5vh;
+        background-color: #fff;
+        margin-left: 2vw;
+        border-radius: 6px;
+        box-shadow: 0 0 4px 4px rgba(133, 133, 133, 0.6);
+    }
+    
+    .existing_limit h3 {
+        font-size: 14px;
+        color: #d00073;
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 300;
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        padding: 10px;
+        padding-top: 20px;
+    }
+    
+    .el_label_p {
+        font-size: 14px;
+        color: #3e3e3e;
+        font-family: 'Work Sans', sans-serif;
+        margin-left: 5vw;
+        font-weight: 600;
+    }
+    
+    .el_limit_p {
+        font-size: 14px;
+        color: #000000;
+        font-family: 'Work Sans', sans-serif;
+        margin-left: 1vw;
     }

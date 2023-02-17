@@ -40,13 +40,13 @@ include 'calender.php';
         </button>
 
         <nav role="navigation" class="menu">
-            <a href="#" class="logotype">Invgltr<span> Portal</span></a>
+            <a href="#" class="logotype">Coe<span> Portal</span></a>
             <div class="overflow-container">
                 <ul style="margin-top:1vh; " class="menu-dropdown">
                     <li><a href="#">Dashboard</a><span class="icon"><i class="fa fa-dashboard"></i></span></li>
                     <li><a href="./faculty.php">Faculty / Exam</a><span class="icon"><i class="fa fa-renren"></i></span></li>
                     <li><a href="./leave_approve.php">Leave Approve</a><span class="icon"><i class="fa fa-stumbleupon"></i></span></li>
-                    <li><a href="#">Faculty</a><span class="icon"><i class="fa fa-user"></i></span></li>
+                    <li><a href="./customize.php">Customize</a><span class="icon"><i class="fa fa-user"></i></span></li>
                     <li style="position:absolute;bottom: 0;"><a href="./logout.php">Logout</a><span class="icon"><i style="margin-left: 11.5vw; color:#fff;" class="fa fa-sign-out"></i></span></li>
                 </ul>
         </nav>
@@ -97,8 +97,9 @@ include 'calender.php';
                 <div id="chartContainer" style="height: 320px; width: 100%;"></div>
                 <?php
                 $dataPoints = array(
-                    array("y" => 73, "label" => "Collected"),
                     array("y" => 27, "label" => "Submitted"),
+                    array("y" => 70, "label" => "Collected"),
+                    array("y" => 3, "label" => "Late Collected"),
                 );
                 ?>
             </div>
@@ -184,8 +185,13 @@ include 'calender.php';
                         <button class="add_announcement_button">Update</button>
                     </form>
                 </div>
-                <div class="admin_other_main">
-                    <h5>hey</h5>
+                <div class="biometric_updates">
+                    <div class="admin_other_main">
+                        <h5>hey</h5>
+                    </div>
+                    <div class="admin_other_main">
+                        <h5>hey</h5>
+                    </div>
                 </div>
             </div>
         </div>
@@ -208,10 +214,12 @@ include 'calender.php';
             animationEnabled: true,
 
             data: [{
-                type: "doughnut",
-                startAngle: 240,
-                yValueFormatString: "##0.00\"%\"",
-                indexLabel: "{label} {y}",
+                type: "bar",
+                yValueFormatString: "#",
+                indexLabel: "{y}",
+                indexLabelPlacement: "inside",
+                indexLabelFontWeight: "bolder",
+                indexLabelFontColor: "white",
                 dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
             }]
         });

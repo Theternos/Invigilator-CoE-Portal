@@ -77,23 +77,8 @@ $username = $_SESSION["username"];
             </select>
             <select name="exam__date" id="exam__date" hidden>
             </select><br><br>
-            <div class="multi-select">
-                <label class="recruit_label" for="exam_date">Select Staffs: </label><br>
-                <select name="ary[]" multiple id="staff_recruit" required>
-                    <?php
-                    $sql = "SELECT * from invigilation.user_data";
-                    $result = mysqli_query($link, $sql);
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                    ?>
-                            <option style='text-align:center;' value='<?php echo $row['Year'] ?>'><?php echo $row['Year'] ?></option>
-                    <?php }
-                    }
-                    ?>
-                </select>
-            </div>
-            <br><br>
-
+            <label class="recruit_label" for="exam_date">Select Exam & Date: </label><br>
+            <input type="number" style="min-width: 30px; min-height: 20px; margin: left 10vw;" name="classroom_required"><br /><br />
             <button type="submit" name="staff_recruit" onclick="return confirm('Are you sure you want to Submit?')">Submit</button>
         </form>
 

@@ -132,27 +132,113 @@ if (isset($_POST['staff_recruit'])) {
     $batch = $_POST['batch_sem'];
     $exam_name = $_POST['exam__date'];
     $exam_date = $_POST['exam_date'];
-    foreach ($values as $staff) {
-        $sqll = "SELECT * from `invigilation`.`user_data` where Year = '$staff'";
-        $resultt = mysqli_query($link, $sqll);
-        $roww = mysqli_fetch_assoc($resultt);
-        $email = $roww['student_official_email_id'];
-        $sql1 = "SELECT * FROM invigilation.exam_details WHERE state = 'UPCOMING'";
-        $result1 = mysqli_query($link, $sql1);
-        $row1 = mysqli_fetch_assoc($result1);
-        $ftime = $row1['ftime'];
-        $bio_time = strtotime($ftime);
-        $bio_out = $row1['ttime'];
-        $time = $bio_time - (15 * 60);
-        $biometric_time = date("H:i:s", $time);
-        $date = date_create($row1['date']);
-        date_sub($date, date_interval_create_from_date_string('1 day'));
-        $mail_date =  date_format($date, 'Y-m-d') . "\n";
-        echo '<br>';
-        $sql = "INSERT INTO `invigilation`.`staff` (batch, exam_name, date_time, staff, email, bio_time, mail_date, bio_out) VALUES ('$batch', '$exam_name', '$exam_date','$staff', '$email', '$biometric_time', '$mail_date', '$bio_out')";
-        echo $sql;
-        $result = mysqli_query($link, $sql);
+    $sql1 = "SELECT * FROM invigilation.exam_details WHERE state = 'UPCOMING'";
+    $result1 = mysqli_query($link, $sql1);
+    $row1 = mysqli_fetch_assoc($result1);
+    $ftime = $row1['ftime'];
+    $bio_time = strtotime($ftime);
+    $bio_out = $row1['ttime'];
+    $time = $bio_time - (15 * 60);
+    $biometric_time = date("H:i:s", $time);
+    $date = date_create($row1['date']);
+    date_sub($date, date_interval_create_from_date_string('1 day'));
+    $mail_date =  date_format($date, 'Y-m-d') . "\n";
+
+    $halls_required = $_POST['classroom_required'];
+    $temp = (int)1;
+    $hall_required = (int)$halls_required;
+    $duty_limit_sql = "SELECT * FROM duty_limit";
+    $duty_limit_result = mysqli_query($link, $duty_limit_sql);
+    $duty_limit_row = mysqli_fetch_assoc($duty_limit_result);
+    $sql = "SELECT * FROM faculty_list WHERE checking = '0'";
+    $result = mysqli_query($link, $sql);
+    echo $hall_required;
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            if ($temp <= $hall_required) {
+                if ($row['faculty_level'] == 1 or $row['faculty_level'] == 0) {
+                    if ($duty_limit_row['ap_1'] > $row['count']) {
+                        $insert_duty_sql = "INSERT INTO `invigilation`.`staff` (batch, exam_name, date_time, staff, email, bio_time, mail_date, bio_out) VALUES ('$batch', '$exam_name', '$exam_date','" . $row['staffname'] . "', '" . $row['current_email'] . "', '$biometric_time', '$mail_date', '$bio_out')";
+                        echo $insert_duty_sql;
+                        $insert_duty_result = mysqli_query($link, $insert_duty_sql);
+                        $update_count_sql = "UPDATE faculty_list SET count = count + 1, daily_count = daily_count + 1 WHERE current_email = '" . $row['current_email'] . "'";
+                        echo $update_count_sql;
+                        $update_count_result = mysqli_query($link, $update_count_sql);
+                        $temp = (int)$temp + 1;
+                    } else {
+                        $update_count_sql = "UPDATE faculty_list SET checking = '1' WHERE current_email = '" . $row['current_email'] . "'";
+                        $update_count_result = mysqli_query($link, $update_count_sql);
+                    }
+                } elseif ($row['faculty_level'] == 2) {
+                    if ($duty_limit_row['ap_2'] > $row['count']) {
+                        $update_count_sql = "UPDATE faculty_list SET count = count + 1, daily_count = daily_count + 1 WHERE current_email = '" . $row['current_email'] . "'";
+                        $update_count_result = mysqli_query($link, $update_count_sql);
+                        $insert_duty_sql = "INSERT INTO `invigilation`.`staff` (batch, exam_name, date_time, staff, email, bio_time, mail_date, bio_out) VALUES ('$batch', '$exam_name', '$exam_date','" . $row['staffname'] . "', '" . $row['current_email'] . "', '$biometric_time', '$mail_date', '$bio_out')";
+                        echo $insert_duty_sql;
+                        $insert_duty_result = mysqli_query($link, $insert_duty_sql);
+                        $temp = (int)$temp + 1;
+                    } else {
+                        $update_count_sql = "UPDATE faculty_list SET checking = '1' WHERE current_email = '" . $row['current_email'] . "'";
+                        $update_count_result = mysqli_query($link, $update_count_sql);
+                    }
+                } elseif ($row['faculty_level'] == 3) {
+                    if ($duty_limit_row['ap_3'] > $row['count']) {
+                        $update_count_sql = "UPDATE faculty_list SET count = count + 1, daily_count = daily_count + 1 WHERE current_email = '" . $row['current_email'] . "'";
+                        $update_count_result = mysqli_query($link, $update_count_sql);
+                        $insert_duty_sql = "INSERT INTO `invigilation`.`staff` (batch, exam_name, date_time, staff, email, bio_time, mail_date, bio_out) VALUES ('$batch', '$exam_name', '$exam_date','" . $row['staffname'] . "', '" . $row['current_email'] . "', '$biometric_time', '$mail_date', '$bio_out')";
+                        echo $insert_duty_sql;
+                        $insert_duty_result = mysqli_query($link, $insert_duty_sql);
+                        $temp = (int)$temp + 1;
+                    } else {
+                        $update_count_sql = "UPDATE faculty_list SET checking = '1' WHERE current_email = '" . $row['current_email'] . "'";
+                        $update_count_result = mysqli_query($link, $update_count_sql);
+                    }
+                } elseif ($row['faculty_level'] == 4) {
+                    if ($duty_limit_row['p'] > $row['count']) {
+                        $update_count_sql = "UPDATE faculty_list SET count = count + 1, daily_count = daily_count + 1 WHERE current_email = '" . $row['current_email'] . "'";
+                        $update_count_result = mysqli_query($link, $update_count_sql);
+                        $insert_duty_sql = "INSERT INTO `invigilation`.`staff` (batch, exam_name, date_time, staff, email, bio_time, mail_date, bio_out) VALUES ('$batch', '$exam_name', '$exam_date','" . $row['staffname'] . "', '" . $row['current_email'] . "', '$biometric_time', '$mail_date', '$bio_out')";
+                        echo $insert_duty_sql;
+                        $insert_duty_result = mysqli_query($link, $insert_duty_sql);
+                        $temp = (int)$temp + 1;
+                    } else {
+                        $update_count_sql = "UPDATE faculty_list SET checking = '1' WHERE current_email = '" . $row['current_email'] . "'";
+                        $update_count_result = mysqli_query($link, $update_count_sql);
+                    }
+                } elseif ($row['faculty_level'] == 6) {
+                    if ($duty_limit_row['ap'] > $row['count']) {
+                        $update_count_sql = "UPDATE faculty_list SET count = count + 1, daily_count = daily_count + 1 WHERE current_email = '" . $row['current_email'] . "'";
+                        $update_count_result = mysqli_query($link, $update_count_sql);
+                        $insert_duty_sql = "INSERT INTO `invigilation`.`staff` (batch, exam_name, date_time, staff, email, bio_time, mail_date, bio_out) VALUES ('$batch', '$exam_name', '$exam_date','" . $row['staffname'] . "', '" . $row['current_email'] . "', '$biometric_time', '$mail_date', '$bio_out')";
+                        echo $insert_duty_sql;
+                        $insert_duty_result = mysqli_query($link, $insert_duty_sql);
+                        $temp = (int)$temp + 1;
+                    } else {
+                        $update_count_sql = "UPDATE faculty_list SET checking = '1' WHERE current_email = '" . $row['current_email'] . "'";
+                        $update_count_result = mysqli_query($link, $update_count_sql);
+                    }
+                } elseif ($row['faculty_level'] == 8) {
+                    if ($duty_limit_row['sp'] > $row['count']) {
+                        $update_count_sql = "UPDATE faculty_list SET count = count + 1, daily_count = daily_count + 1 WHERE current_email = '" . $row['current_email'] . "'";
+                        $update_count_result = mysqli_query($link, $update_count_sql);
+                        $insert_duty_sql = "INSERT INTO `invigilation`.`staff` (batch, exam_name, date_time, staff, email, bio_time, mail_date, bio_out) VALUES ('$batch', '$exam_name', '$exam_date','" . $row['staffname'] . "', '" . $row['current_email'] . "', '$biometric_time', '$mail_date', '$bio_out')";
+                        echo $insert_duty_sql;
+                        $insert_duty_result = mysqli_query($link, $insert_duty_sql);
+                        $temp = (int)$temp + 1;
+                    } else {
+                        $update_count_sql = "UPDATE faculty_list SET checking = '1' WHERE current_email = '" . $row['current_email'] . "'";
+                        $update_count_result = mysqli_query($link, $update_count_sql);
+                    }
+                }
+            } else {
+                break;
+            }
+        }
+    } else {
+        $update_count_sql = "UPDATE faculty_list SET checking = '0'";
+        $update_count_result = mysqli_query($link, $update_count_sql);
     }
+
     echo '<br>';
     $sql = "UPDATE invigilation.exam_details SET status = 'RECRUITED' WHERE exam_name = '$exam_name' and date_time = '$exam_date'";
     echo $sql;
