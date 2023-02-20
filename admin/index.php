@@ -142,11 +142,14 @@ $calender_date = date('m/d/Y', time());
                         $json = file_get_contents($jsonurl);
                         $weather = json_decode($json);
                         $kelvin = $weather->main->temp;
-                        $greeting_time = date('H:i', time()); ?>
-
-
-                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.whattoexpect.com%2Ffirst-year%2Fmonth-by-month%2Fweek-1.aspx&psig=AOvVaw1xiehW4nBSkp0j-OBixWwO&ust=1676738146381000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCKC9lMn-nP0CFQAAAAAdAAAAABAE" alt="Weather Image" width="110px">
-                        <p><span style="font-size: 22px;"><?php echo $kelvin ?>°C</span></p>
+                        $greeting_time = date('H:i', time());
+                        if ($greeting_time <= '05:45' and $greeting_time >= '00:00')
+                            echo '<img src="../assets/moon.png" alt="Weather Image" width="110px">';
+                        elseif ($greeting_time <= '23:59' and $greeting_time >= '19:00')
+                            echo '<img src="../assets/moon.png" alt="Weather Image" width="110px">';
+                        else
+                            echo '<img src="../assets/cloudy.png" alt="Weather Image" width="110px">';
+                        ?> <p><span style="font-size: 22px;"><?php echo $kelvin ?>°C</span></p>
                         <h4 style="letter-spacing: 1px;font-size: 13px;">
                             <?php
                             echo date('l');
@@ -192,14 +195,13 @@ $calender_date = date('m/d/Y', time());
                             ?></p>
                     </div>
                 </div>
-
             </div>
             <div class="admin_initial_2">
                 <div style="margin-top:0" class="initia add_announcements">
                     <h5>ADD LATEST ANNOUNCEMENTS & NEWS</h5>
-                    <form action="action" method="POST">
-                        <textarea style="min-height:15vh; margin-top: 3vh;" name="add_announcement" class="add_announcement" type="text"></textarea>
-                        <button class="add_announcement_button">Update</button>
+                    <form action="action.php" method="POST">
+                        <textarea style="min-height:15vh; margin-top: 3vh;" placeholder="Type Here..." name="add_announcement" class="add_announcement" type="text"></textarea>
+                        <button name="add_announcement_button" class="add_announcement_button">Update</button>
                     </form>
                 </div>
                 <div class="biometric_updates">

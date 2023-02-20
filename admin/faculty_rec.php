@@ -55,7 +55,8 @@ $username = $_SESSION["username"];
     <section class="recruit">
         <h3>Recruit Staffs</h3>
         <form action="fac_ajax.php" method="POST">
-            <label class="recruit_label" for="batch_sem">Select Batch & Semester: </label><br>
+            <br>
+            <label class="recruit_label" for="batch_sem">Select Batch & Semester: </label><br><br />
             <select name="batch_sem" id="batch_sem" onchange="FetchState(this.value)" required>
                 <option style='text-align:center;'>-- SELECT --</option>
                 <?php
@@ -70,16 +71,15 @@ $username = $_SESSION["username"];
                 <?php }
                 }
                 ?>
-            </select><br><br>
-            <label class="recruit_label" for="exam_date">Select Exam & Date: </label><br>
+            </select><br><br><br><br>
+            <label class="recruit_label" for="exam_date">Select Exam & Date: </label><br><br />
             <select name="exam_date" id="exam_date" required>
                 <option style="text-align: center;" value='0'>-- SELECT --</option>
             </select>
             <select name="exam__date" id="exam__date" hidden>
             </select><br><br>
-            <label class="recruit_label" for="exam_date">Choose Number of Classes </label><br>
-            <input type="number" style="min-width: 30px; min-height: 20px; margin: left 10vw;" name="classroom_required"><br /><br />
-            <button type="submit" name="staff_recruit" onclick="return confirm('Are you sure you want to Submit?')">Submit</button>
+            <input type="hidden" style="min-width: 30px; min-height: 20px; margin: left 10vw;" value="3" name="classroom_required"><br /><br />
+            <button type="submit" style="margin-top: 4vh;" name="staff_recruit" onclick="return confirm('Are you sure you want to Submit?')">Submit</button>
         </form>
 
     </section>

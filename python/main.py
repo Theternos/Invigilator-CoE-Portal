@@ -76,7 +76,7 @@ for x in exam:
         mycursor.execute(a)
         mydb.commit()
         print(mycursor.rowcount, "record(s) affected")
-        email = 'allwin.cs21@bitsathy.ac.in'
+        email = 'anusuya.cs21@bitsathy.ac.in'
         date_time = x[3]
         timee = x[7]
         server = smtplib.SMTP('smtp.gmail.com',587)
@@ -137,6 +137,10 @@ Ph: 04295-226122, 226123
                         print(a)
                         mycursor.execute(a)
                         mydb.commit()
+                        
+                        
+                        
+                        
                         print(mycursor.rowcount, "record(s) affected")   
                         print(room)
                         class_list.remove(room)
@@ -178,7 +182,7 @@ for staff_date in staff_table:
         if(date[3] == staff_date[3]):
             now = datetime.now()
             if(date[2] > now):
-                email = 'allwin.cs21@bitsathy.ac.in'
+                email = 'anusuya.cs21@bitsathy.ac.in'
                 date_time = staff_date[3]
                 timee = staff_date[7]
                 server = smtplib.SMTP('smtp.gmail.com',587)

@@ -33,3 +33,9 @@ if (isset($_POST['update_staff_recruit_limit'])) {
     $result = mysqli_query($link, $sql);
     header("location: customize.php");
 }
+if (isset($_POST['add_announcement_button'])) {
+    $description = $_POST['add_announcement'];
+    $sql = "INSERT INTO latest_announcements (announcements) VALUES ('$description')";
+    $result = mysqli_query($link, $sql);
+    header("location: index.php");
+}

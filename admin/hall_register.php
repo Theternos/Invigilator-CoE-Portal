@@ -121,7 +121,6 @@ error_reporting(0);
         font-size: 14px;
         color: #333;
     }
-
 </style>
 
 <body>

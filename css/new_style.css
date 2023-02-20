@@ -807,10 +807,10 @@
     
     .schedule_remainder {
         background-color: #fff !important;
-        width: 30vw !important;
+        width: 29.7vw !important;
         height: 29.5vh;
         border-radius: 6px;
-        margin-left: 2 vw;
+        margin-left: 2vh;
         padding: 20px;
         margin-top: 5vh;
         box-shadow: 0 0 4px 4px rgba(133, 133, 133, 0.6);
@@ -1213,7 +1213,7 @@
         width: 21vw;
         height: 50.5vh;
         background-color: #fff;
-        margin-left: 2vw;
+        margin-left: 3vw;
         border-radius: 6px;
         box-shadow: 0 0 4px 4px rgba(133, 133, 133, 0.6);
     }
@@ -1335,4 +1335,67 @@
         font-family: 'Poppins', sans-serif;
         letter-spacing: 1px;
         box-shadow: 0 0 4px 4px rgba(133, 133, 133, 0.137);
+    }
+    
+    .first_right_bar {
+        background-color: #fff;
+        min-width: 28vw !important;
+        height: 25vh;
+        border-radius: 6px;
+        margin-left: 3vw;
+        overflow-y: scroll;
+        position: relative;
+        margin-right: 0;
+        margin-top: 5vh;
+        box-shadow: 0 0 4px 4px rgba(133, 133, 133, 0.6);
+    }
+    
+    .third_right_bar {
+        background-color: #fff;
+        min-width: 28vw !important;
+        height: 27.7vh;
+        border-radius: 6px;
+        margin-left: 3vw;
+        overflow-y: scroll;
+        position: relative;
+        margin-right: 0;
+        margin-top: 5vh;
+        box-shadow: 0 0 4px 4px rgba(133, 133, 133, 0.6);
+    }
+    
+    .second_right_bar {
+        background-color: #fff;
+        min-width: 28vw !important;
+        height: 27.7vh;
+        border-radius: 6px;
+        margin-left: 3vw;
+        overflow-y: scroll;
+        position: relative;
+        margin-right: 0;
+        box-shadow: 0 0 4px 4px rgba(133, 133, 133, 0.6);
+    }
+    
+    .first_right_bar button {
+        background-color: #000;
+        color: #f5f4f4;
+        height: 30px;
+        padding-left: 5px;
+        padding-right: 5px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    
+    .second_right_bar button {
+        background-color: #000;
+        color: #f5f4f4;
+        height: 30px;
+        padding-left: 5px;
+        padding-right: 5px;
+        border-radius: 6px;
+        display: flex;
+        margin: auto;
+        justify-content: center;
+        align-items: center;
+        margin-top: 8vh;
+        cursor: pointer;
     }
