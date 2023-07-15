@@ -41,7 +41,7 @@ To install and set up the "Automation in Invigilation Duty" project, please foll
 
 Clone this repository: `git clone https://github.com/Theternos/Invigilator-CoE-Portal.git`    
 Move the folder "Invigilator-CoE-Portal" to www in WAMP/htdocs in XAMP and start your Wampserver/XAMP  
-Set up a MySQL database and configure the connection details in config.py.  
+Set up a MySQL database and configure the connection details in config.py  
 Install the MySQL connector `pip install mysql-connector`   
 Run the application for mail automation: `python/python main.py`  
 Now Access the portal in your web browser at http://localhost/Invigilator-CoE-Portal
