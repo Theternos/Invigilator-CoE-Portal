@@ -501,6 +501,7 @@
         background-color: #fff;
         padding: 10px;
         overflow-y: scroll;
+        max-height: 200px;
     }
     
     .add-todo input {

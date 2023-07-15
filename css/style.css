@@ -1040,4 +1040,5 @@ table th {
 
 .admin_other_main {
     padding-left: 20px;
+    overflow-y: scroll;
 }

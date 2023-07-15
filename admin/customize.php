@@ -275,7 +275,6 @@ error_reporting(0);
                 <?php
                 $sql = "SELECT biometric.staff_name, biometric.email, staff.date_time, staff.venue, staff.batch, staff.exam_name, biometric.in_time, biometric.out_time, biometric.`status` FROM staff, biometric WHERE staff.`status` = 'ENDED' and staff.email = biometric.email";
                 $result = mysqli_query($link, $sql); ?>
-
                 <table style='display:none;' id="tbl_exporttable_to_xls" border="1">
                     <thead>
                         <th>Staff Name</th>
