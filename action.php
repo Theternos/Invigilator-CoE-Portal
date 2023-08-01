@@ -2,7 +2,7 @@
 include 'config.php';
 
 session_start();
-// Check if the user is logged in, if not then redirect him to login page
+// Check if the user is logged in, if not then redirect him to login page:
 if (!isset($_SESSION["bit_invigilation_duty_COE"]) || $_SESSION["bit_invigilation_duty_COE"] !== true) {
     header("location: login.php");
     exit;
