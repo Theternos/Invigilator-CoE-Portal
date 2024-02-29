@@ -4,7 +4,7 @@ Invigilation duty is a crucial and time-consuming task that requires careful coo
 
 To address these challenges, we have developed a web application called "Automation in Invigilation Duty" that streamlines and automates the invigilation process. This user-friendly and interactive system simplifies the entire invigilation workflow, ensuring smooth and efficient operations. 🚀
 
-## **Key Features 📋**
+## **Key Features**
 
 Faculty Registration 🎓: The first step is the faculty registration process. Faculty members can easily create their accounts, providing the necessary information.
 
